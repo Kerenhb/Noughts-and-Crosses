@@ -7,7 +7,7 @@ function drawLine(x1, y1, x2, y2) {
 strokeWidth="3" stroke="black"/>
 }
 
-const element = <svg 
+const grid = <svg 
 width={3 * boxSize} height={3 * boxSize}>
     {drawLine(0, boxSize, 3 * boxSize, boxSize)}
     {drawLine(0, 2 * boxSize, 3 * boxSize, 2 * boxSize)}
@@ -16,4 +16,4 @@ width={3 * boxSize} height={3 * boxSize}>
 </svg>
 
 const rootElement = document.getElementById('root');
-ReactDOM.render(element, rootElement)
+ReactDOM.render(grid, rootElement)
