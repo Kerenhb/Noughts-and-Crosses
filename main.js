@@ -14,12 +14,13 @@ class Symbol extends React.Component {
     };
 
     handleClick(isCross) {
+        console.log('You clicked!')
         this.setState({isCross: isCross});
     };
 
     render() {
         const drawCross = () => {
-            const padding = 10;
+            const padding = 15;
             return (
                     <svg width={3 * boxSize} height={3 * boxSize}>
                         <line x1={this.props.position[0] + padding} y1={this.props.position[1] + padding}
