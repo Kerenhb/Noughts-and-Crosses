@@ -44,7 +44,7 @@ class Symbol extends React.Component {
             );
         };
 
-        const {active, isCross} = this.state;
+        const isCross = this.state;
         // Draws only if visible, aka isCross != null
         return (isCross != null && (isCross ? drawCross() : drawCircle()));
     };
