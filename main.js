@@ -10,7 +10,7 @@ strokeWidth="4" stroke="black"/>
 class Symbol extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {isCross: true};
+        this.state = {isCross: null};
     };
 
     handleClick(isCross) {
@@ -60,9 +60,23 @@ class Symbol extends React.Component {
             );
         };
 
+        const drawNull = () => {
+            return (
+                <svg width={3 * boxSize} height={3 * boxSize}
+                onClick={() => this.handleClick(true)}>
+                    <rect x={this.props.position[0] + 2}
+                    y={this.props.position[1] + 2}
+                    width={boxSize - 4} height={boxSize - 4}
+                    fillOpacity="0"/>
+                </svg>
+            );
+        };
+
         const isCross = this.state.isCross;
         // Draws only if visible, aka isCross != null
-        return (isCross != null && (isCross ? drawCross() : drawCircle()));
+        return (
+            isCross === null ? drawNull() :
+            (isCross ? drawCross() : drawCircle()));
     };
 }
 
