@@ -9,9 +9,7 @@ class Symbol extends React.Component {
 
     ownClickHandler(props) {
         const crossTurn = props.crossTurn;
-        this.setState({
-            isCross: crossTurn
-        });
+        this.setState({isCross: crossTurn});
     };
 
     render() {
@@ -19,20 +17,20 @@ class Symbol extends React.Component {
         const boxSize = this.props.boxSize;
         const drawCross = () => {
             return (
-                    <svg width={3 * boxSize} height={3 * boxSize}>
-                        <line x1={this.props.position[0] + padding}
-                        y1={this.props.position[1] + padding}
-                        x2={this.props.position[0] + boxSize - padding}
-                        y2={this.props.position[1] + boxSize - padding}
-                        strokeWidth="3" stroke="red"/>
+                <svg width={3 * boxSize} height={3 * boxSize}>
+                    <line x1={this.props.position[0] + padding}
+                    y1={this.props.position[1] + padding}
+                    x2={this.props.position[0] + boxSize - padding}
+                    y2={this.props.position[1] + boxSize - padding}
+                    strokeWidth="3" stroke="red"/>
 
-                        <line x1={this.props.position[0] + boxSize - padding}
-                        y1={this.props.position[1] + padding}
-                        x2={this.props.position[0] + padding}
-                        y2={this.props.position[1] + boxSize - padding}
-                        strokeWidth="3" stroke="red"/>
-                    </svg>
-                );
+                    <line x1={this.props.position[0] + boxSize - padding}
+                    y1={this.props.position[1] + padding}
+                    x2={this.props.position[0] + padding}
+                    y2={this.props.position[1] + boxSize - padding}
+                    strokeWidth="3" stroke="red"/>
+                </svg>
+            );
         };
 
         const drawCircle = () => {
@@ -49,10 +47,10 @@ class Symbol extends React.Component {
         const drawNull = () => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}
-                onClick={() => {
-                    this.props.mainClickHandler();
-                    this.ownClickHandler(this.props);
-                }}>
+                    onClick={() => {
+                        this.props.mainClickHandler();
+                        this.ownClickHandler(this.props);
+                    }}>
                     <rect x={this.props.position[0] + 2}
                     y={this.props.position[1] + 2}
                     width={boxSize - 4} height={boxSize - 4}
@@ -75,7 +73,7 @@ class Game extends React.Component {
         this.handleNullClick = this.handleNullClick.bind(this);
 
         this.state = {
-            crossTurn: true,
+            crossTurn: true, // Who goes first
             boxSize: 100 // Size of each spot in the grid
         };
     }
