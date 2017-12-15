@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+let crossTurn = true;
 const boxSize = 100;
 function drawLine(x1, y1, x2, y2) {
     return <line x1={x1} y1={y1} x2={x2} y2={y2}
@@ -15,6 +16,12 @@ class Symbol extends React.Component {
 
     handleClick(isCross) {
         this.setState({isCross: isCross});
+        crossTurn = !crossTurn;
+    };
+
+    handleNullClick() {
+        this.setState({isCross: crossTurn});
+        crossTurn = !crossTurn;
     };
 
     render() {
@@ -60,10 +67,10 @@ class Symbol extends React.Component {
             );
         };
 
-        const drawNull = isCross => {
+        const drawNull = () => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}
-                onClick={() => this.handleClick(isCross)}>
+                onClick={() => this.handleNullClick()}>
                     <rect x={this.props.position[0] + 2}
                     y={this.props.position[1] + 2}
                     width={boxSize - 4} height={boxSize - 4}
@@ -75,7 +82,7 @@ class Symbol extends React.Component {
         const isCross = this.state.isCross;
         // Draws only if visible, aka isCross != null
         return (
-            isCross === null ? drawNull(true) :
+            isCross === null ? drawNull() :
             (isCross ? drawCross(false) : drawCircle(true)));
     };
 }
