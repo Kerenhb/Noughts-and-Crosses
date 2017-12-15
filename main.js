@@ -62,6 +62,8 @@ class Symbol extends React.Component {
 class Game extends React.Component {
     constructor(props) {
         super(props);
+        this.handleNullClick = this.handleNullClick.bind(this);
+
         this.state = {
             crossTurn: true,
             boxSize: 100 // Size of each spot in the grid
@@ -74,10 +76,8 @@ class Game extends React.Component {
     }
 
     handleNullClick() {
-        console.log("You Clicked")
-        //this.setState({isCross: crossTurn});
-        crossTurn = !crossTurn; // Change turn
-        this.setState({crossTurn: crossTurn});
+        const crossTurn = this.state.crossTurn;
+        this.setState({crossTurn: !crossTurn}); // Change turn
     };
 
     render () {
