@@ -22,7 +22,8 @@ class Symbol extends React.Component {
         const padding = 15;
         const drawCross = () => {
             return (
-                    <svg width={3 * boxSize} height={3 * boxSize}>
+                    <svg width={3 * boxSize} height={3 * boxSize}
+                    onClick={() => this.handleClick(false)}>
                         <line x1={this.props.position[0] + padding}
                         y1={this.props.position[1] + padding}
                         x2={this.props.position[0] + boxSize - padding}
@@ -40,7 +41,8 @@ class Symbol extends React.Component {
 
         const drawCircle = () => {
             return (
-                <svg width={3 * boxSize} height={3 * boxSize}>
+                <svg width={3 * boxSize} height={3 * boxSize}
+                onClick={() => this.handleClick(true)}>
                     <circle cx={this.props.position[0] + boxSize/2}
                     cy={this.props.position[1] + boxSize/2}
                     r={boxSize/2 - padding}
