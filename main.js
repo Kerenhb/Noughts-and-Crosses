@@ -7,11 +7,6 @@ class Symbol extends React.Component {
         this.state = {isCross: null}; // Each symbol is either: blank, cross or a circle
     };
 
-    handleNullClick() {
-        this.setState({isCross: crossTurn});
-        crossTurn = !crossTurn; // Change turn
-    };
-
     render() {
         const padding = 15;
         const boxSize = this.props.boxSize;
@@ -47,7 +42,7 @@ class Symbol extends React.Component {
         const drawNull = () => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}
-                onClick={() => this.handleNullClick()}>
+                onClick={() => this.props.clickHandler()}>
                     <rect x={this.props.position[0] + 2}
                     y={this.props.position[1] + 2}
                     width={boxSize - 4} height={boxSize - 4}
@@ -78,6 +73,13 @@ class Game extends React.Component {
         strokeWidth="4" stroke="black"/>
     }
 
+    handleNullClick() {
+        console.log("You Clicked")
+        //this.setState({isCross: crossTurn});
+        crossTurn = !crossTurn; // Change turn
+        this.setState({crossTurn: crossTurn});
+    };
+
     render () {
         const boxSize = this.state.boxSize;
 
@@ -88,17 +90,51 @@ class Game extends React.Component {
                 {this.drawLine(boxSize, 0, boxSize, 3 * boxSize)}
                 {this.drawLine(2 * boxSize, 0, 2 * boxSize, 3 * boxSize)}
 
-                <Symbol boxSize = {boxSize} position = {[0, 0]} />
-                <Symbol boxSize = {boxSize} position = {[boxSize, 0]} />
-                <Symbol boxSize = {boxSize} position = {[2 * boxSize, 0]} />
-
-                <Symbol boxSize = {boxSize} position = {[0, boxSize]} />
-                <Symbol boxSize = {boxSize} position = {[boxSize, boxSize]} />
-                <Symbol boxSize = {boxSize} position = {[2 * boxSize, boxSize]} />
-
-                <Symbol boxSize = {boxSize} position = {[0, 2 * boxSize]} />
-                <Symbol boxSize = {boxSize} position = {[boxSize, 2 * boxSize]} />
-                <Symbol boxSize = {boxSize} position = {[2 * boxSize, 2 * boxSize]} />
+                <Symbol
+                    boxSize = {boxSize}
+                    position = {[0, 0]}
+                    clickHandler = {this.handleNullClick}
+                />
+                <Symbol
+                    boxSize = {boxSize}
+                    position = {[boxSize, 0]}
+                    clickHandler = {this.handleNullClick}
+                />
+                <Symbol
+                    boxSize = {boxSize}
+                    position = {[2 * boxSize, 0]}
+                    clickHandler = {this.handleNullClick}
+                />
+                <Symbol
+                    boxSize = {boxSize}
+                    position = {[0, boxSize]}
+                    clickHandler = {this.handleNullClick}
+                />
+                <Symbol
+                    boxSize = {boxSize}
+                    position = {[boxSize, boxSize]}
+                    clickHandler = {this.handleNullClick}
+                />
+                <Symbol
+                    boxSize = {boxSize}
+                    position = {[2 * boxSize, boxSize]}
+                    clickHandler = {this.handleNullClick}
+                />
+                <Symbol
+                    boxSize = {boxSize}
+                    position = {[0, 2 * boxSize]}
+                    clickHandler = {this.handleNullClick}
+                />
+                <Symbol
+                    boxSize = {boxSize}
+                    position = {[boxSize, 2 * boxSize]}
+                    clickHandler = {this.handleNullClick}
+                />
+                <Symbol
+                    boxSize = {boxSize}
+                    position = {[2 * boxSize, 2 * boxSize]}
+                    clickHandler = {this.handleNullClick}
+                />
             </svg>
         );
     }
