@@ -19,10 +19,10 @@ class Symbol extends React.Component {
 
     render() {
         const padding = 15;
-        const drawCross = () => {
+        const drawCross = isCross => {
             return (
                     <svg width={3 * boxSize} height={3 * boxSize}
-                    onClick={() => this.handleClick(false)}>
+                    onClick={() => this.handleClick(isCross)}>
                         <rect x={this.props.position[0] + 2}
                         y={this.props.position[1] + 2}
                         width={boxSize - 4} height={boxSize - 4}
@@ -43,10 +43,10 @@ class Symbol extends React.Component {
                 );
         };
 
-        const drawCircle = () => {
+        const drawCircle = isCross => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}
-                onClick={() => this.handleClick(true)}>
+                onClick={() => this.handleClick(isCross)}>
                     <rect x={this.props.position[0] + 2}
                     y={this.props.position[1] + 2}
                     width={boxSize - 4} height={boxSize - 4}
@@ -60,10 +60,10 @@ class Symbol extends React.Component {
             );
         };
 
-        const drawNull = () => {
+        const drawNull = isCross => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}
-                onClick={() => this.handleClick(true)}>
+                onClick={() => this.handleClick(isCross)}>
                     <rect x={this.props.position[0] + 2}
                     y={this.props.position[1] + 2}
                     width={boxSize - 4} height={boxSize - 4}
@@ -75,8 +75,8 @@ class Symbol extends React.Component {
         const isCross = this.state.isCross;
         // Draws only if visible, aka isCross != null
         return (
-            isCross === null ? drawNull() :
-            (isCross ? drawCross() : drawCircle()));
+            isCross === null ? drawNull(true) :
+            (isCross ? drawCross(false) : drawCircle(true)));
     };
 }
 
