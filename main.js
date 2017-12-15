@@ -13,8 +13,11 @@ class Symbol extends React.Component {
     };
 
     render() {
-        const padding = 15;
-        const boxSize = this.props.boxSize;
+        const boxSize = this.props.scale;
+        const padding = this.props.scale / 7;
+        const strokeSize = this.props.scale /30;
+        const lineSize = this.props.scale / 25;
+
         const drawCross = () => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}>
@@ -22,13 +25,13 @@ class Symbol extends React.Component {
                     y1={this.props.position[1] + padding}
                     x2={this.props.position[0] + boxSize - padding}
                     y2={this.props.position[1] + boxSize - padding}
-                    strokeWidth="3" stroke="red"/>
+                    strokeWidth={strokeSize} stroke="red"/>
 
                     <line x1={this.props.position[0] + boxSize - padding}
                     y1={this.props.position[1] + padding}
                     x2={this.props.position[0] + padding}
                     y2={this.props.position[1] + boxSize - padding}
-                    strokeWidth="3" stroke="red"/>
+                    strokeWidth={strokeSize} stroke="red"/>
                 </svg>
             );
         };
@@ -39,7 +42,7 @@ class Symbol extends React.Component {
                     <circle cx={this.props.position[0] + boxSize/2}
                     cy={this.props.position[1] + boxSize/2}
                     r={boxSize/2 - padding}
-                    strokeWidth="3" stroke="blue" fillOpacity="0"/>
+                    strokeWidth={strokeSize} stroke="blue" fillOpacity="0"/>
                 </svg>
             );
         };
@@ -51,9 +54,9 @@ class Symbol extends React.Component {
                         this.props.mainClickHandler();
                         this.ownClickHandler(this.props);
                     }}>
-                    <rect x={this.props.position[0] + 2}
-                    y={this.props.position[1] + 2}
-                    width={boxSize - 4} height={boxSize - 4}
+                    <rect x={this.props.position[0] + lineSize / 2}
+                    y={this.props.position[1] + lineSize / 2}
+                    width={boxSize - lineSize} height={boxSize - lineSize}
                     fillOpacity="0"/>
                 </svg>
             );
@@ -74,13 +77,15 @@ class Game extends React.Component {
 
         this.state = {
             crossTurn: true, // Who goes first
-            boxSize: 100 // Size of each spot in the grid
+            scale: 100 // Overall relative scale (100 is normal)
         };
     }
 
     drawLine(x1, y1, x2, y2) {
+        const scale = this.state.scale;
         return <line x1={x1} y1={y1} x2={x2} y2={y2}
-        strokeWidth="4" stroke="black"/>
+        strokeWidth={scale / 25}
+        stroke="black"/>
     }
 
     handleNullClick() {
@@ -89,7 +94,8 @@ class Game extends React.Component {
     };
 
     render () {
-        const boxSize = this.state.boxSize;
+        const scale = this.state.scale;
+        const boxSize = this.state.scale; // Size of each space
         const crossTurn = this.state.crossTurn;
 
         return (
@@ -100,55 +106,55 @@ class Game extends React.Component {
                 {this.drawLine(2 * boxSize, 0, 2 * boxSize, 3 * boxSize)}
 
                 <Symbol
-                    boxSize = {boxSize}
+                    scale = {scale}
                     position = {[0, 0]}
                     mainClickHandler = {this.handleNullClick}
                     crossTurn = {crossTurn}
                 />
                 <Symbol
-                    boxSize = {boxSize}
+                    scale = {scale}
                     position = {[boxSize, 0]}
                     mainClickHandler = {this.handleNullClick}
                     crossTurn = {crossTurn}
                 />
                 <Symbol
-                    boxSize = {boxSize}
+                    scale = {scale}
                     position = {[2 * boxSize, 0]}
                     mainClickHandler = {this.handleNullClick}
                     crossTurn = {crossTurn}
                 />
                 <Symbol
-                    boxSize = {boxSize}
+                    scale = {scale}
                     position = {[0, boxSize]}
                     mainClickHandler = {this.handleNullClick}
                     crossTurn = {crossTurn}
                 />
                 <Symbol
-                    boxSize = {boxSize}
+                    scale = {scale}
                     position = {[boxSize, boxSize]}
                     mainClickHandler = {this.handleNullClick}
                     crossTurn = {crossTurn}
                 />
                 <Symbol
-                    boxSize = {boxSize}
+                    scale = {scale}
                     position = {[2 * boxSize, boxSize]}
                     mainClickHandler = {this.handleNullClick}
                     crossTurn = {crossTurn}
                 />
                 <Symbol
-                    boxSize = {boxSize}
+                    scale = {scale}
                     position = {[0, 2 * boxSize]}
                     mainClickHandler = {this.handleNullClick}
                     crossTurn = {crossTurn}
                 />
                 <Symbol
-                    boxSize = {boxSize}
+                    scale = {scale}
                     position = {[boxSize, 2 * boxSize]}
                     mainClickHandler = {this.handleNullClick}
                     crossTurn = {crossTurn}
                 />
                 <Symbol
-                    boxSize = {boxSize}
+                    scale = {scale}
                     position = {[2 * boxSize, 2 * boxSize]}
                     mainClickHandler = {this.handleNullClick}
                     crossTurn = {crossTurn}
