@@ -14,7 +14,6 @@ class Symbol extends React.Component {
     };
 
     handleClick(isCross) {
-        console.log('You clicked!')
         this.setState({isCross: isCross});
     };
 
