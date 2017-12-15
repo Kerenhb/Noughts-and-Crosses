@@ -1,13 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-let crossTurn = true;
-const boxSize = 100; // Size of each spot in the grid
-function drawLine(x1, y1, x2, y2) {
-    return <line x1={x1} y1={y1} x2={x2} y2={y2}
-strokeWidth="4" stroke="black"/>
-}
-
 class Symbol extends React.Component {
     constructor(props) {
         super(props);
@@ -21,6 +14,7 @@ class Symbol extends React.Component {
 
     render() {
         const padding = 15;
+        const boxSize = this.props.boxSize;
         const drawCross = () => {
             return (
                     <svg width={3 * boxSize} height={3 * boxSize}>
@@ -70,24 +64,46 @@ class Symbol extends React.Component {
     };
 }
 
-const element = <svg width={3 * boxSize} height={3 * boxSize}>
-    {drawLine(0, boxSize, 3 * boxSize, boxSize)}
-    {drawLine(0, 2 * boxSize, 3 * boxSize, 2 * boxSize)}
-    {drawLine(boxSize, 0, boxSize, 3 * boxSize)}
-    {drawLine(2 * boxSize, 0, 2 * boxSize, 3 * boxSize)}
+class Game extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            crossTurn: true,
+            boxSize: 100 // Size of each spot in the grid
+        };
+    }
 
-    <Symbol position = {[0, 0]} />
-    <Symbol position = {[boxSize, 0]} />
-    <Symbol position = {[2 * boxSize, 0]} />
+    drawLine(x1, y1, x2, y2) {
+        return <line x1={x1} y1={y1} x2={x2} y2={y2}
+        strokeWidth="4" stroke="black"/>
+    }
 
-    <Symbol position = {[0, boxSize]} />
-    <Symbol position = {[boxSize, boxSize]} />
-    <Symbol position = {[2 * boxSize, boxSize]} />
+    render () {
+        const boxSize = this.state.boxSize;
 
-    <Symbol position = {[0, 2 * boxSize]} />
-    <Symbol position = {[boxSize, 2 * boxSize]} />
-    <Symbol position = {[2 * boxSize, 2 * boxSize]} />
-</svg>
+        return (
+            <svg width={3 * boxSize} height={3 * boxSize}>
+                {this.drawLine(0, boxSize, 3 * boxSize, boxSize)}
+                {this.drawLine(0, 2 * boxSize, 3 * boxSize, 2 * boxSize)}
+                {this.drawLine(boxSize, 0, boxSize, 3 * boxSize)}
+                {this.drawLine(2 * boxSize, 0, 2 * boxSize, 3 * boxSize)}
 
+                <Symbol boxSize = {boxSize} position = {[0, 0]} />
+                <Symbol boxSize = {boxSize} position = {[boxSize, 0]} />
+                <Symbol boxSize = {boxSize} position = {[2 * boxSize, 0]} />
+
+                <Symbol boxSize = {boxSize} position = {[0, boxSize]} />
+                <Symbol boxSize = {boxSize} position = {[boxSize, boxSize]} />
+                <Symbol boxSize = {boxSize} position = {[2 * boxSize, boxSize]} />
+
+                <Symbol boxSize = {boxSize} position = {[0, 2 * boxSize]} />
+                <Symbol boxSize = {boxSize} position = {[boxSize, 2 * boxSize]} />
+                <Symbol boxSize = {boxSize} position = {[2 * boxSize, 2 * boxSize]} />
+            </svg>
+        );
+    }
+}
+
+const element = <Game />;
 const rootElement = document.getElementById('root');
 ReactDOM.render(element, rootElement)
