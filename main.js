@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 let crossTurn = true;
-const boxSize = 100;
+const boxSize = 100; // Size of each spot in the grid
 function drawLine(x1, y1, x2, y2) {
     return <line x1={x1} y1={y1} x2={x2} y2={y2}
 strokeWidth="4" stroke="black"/>
@@ -11,17 +11,17 @@ strokeWidth="4" stroke="black"/>
 class Symbol extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {isCross: null};
+        this.state = {isCross: null}; // Each symbol is either: blank, cross or a circle
     };
 
     handleNullClick() {
         this.setState({isCross: crossTurn});
-        crossTurn = !crossTurn;
+        crossTurn = !crossTurn; // Change turn
     };
 
     render() {
         const padding = 15;
-        const drawCross = isCross => {
+        const drawCross = () => {
             return (
                     <svg width={3 * boxSize} height={3 * boxSize}>
                         <line x1={this.props.position[0] + padding}
@@ -39,7 +39,7 @@ class Symbol extends React.Component {
                 );
         };
 
-        const drawCircle = isCross => {
+        const drawCircle = () => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}>
                     <circle cx={this.props.position[0] + boxSize/2}
@@ -70,7 +70,7 @@ class Symbol extends React.Component {
     };
 }
 
-const grid = <svg width={3 * boxSize} height={3 * boxSize}>
+const element = <svg width={3 * boxSize} height={3 * boxSize}>
     {drawLine(0, boxSize, 3 * boxSize, boxSize)}
     {drawLine(0, 2 * boxSize, 3 * boxSize, 2 * boxSize)}
     {drawLine(boxSize, 0, boxSize, 3 * boxSize)}
@@ -90,4 +90,4 @@ const grid = <svg width={3 * boxSize} height={3 * boxSize}>
 </svg>
 
 const rootElement = document.getElementById('root');
-ReactDOM.render(grid, rootElement)
+ReactDOM.render(element, rootElement)
