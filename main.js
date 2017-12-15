@@ -14,11 +14,6 @@ class Symbol extends React.Component {
         this.state = {isCross: null};
     };
 
-    handleClick(isCross) {
-        this.setState({isCross: isCross});
-        crossTurn = !crossTurn;
-    };
-
     handleNullClick() {
         this.setState({isCross: crossTurn});
         crossTurn = !crossTurn;
@@ -28,8 +23,7 @@ class Symbol extends React.Component {
         const padding = 15;
         const drawCross = isCross => {
             return (
-                    <svg width={3 * boxSize} height={3 * boxSize}
-                    onClick={() => this.handleClick(isCross)}>
+                    <svg width={3 * boxSize} height={3 * boxSize}>
                         <rect x={this.props.position[0] + 2}
                         y={this.props.position[1] + 2}
                         width={boxSize - 4} height={boxSize - 4}
@@ -52,8 +46,7 @@ class Symbol extends React.Component {
 
         const drawCircle = isCross => {
             return (
-                <svg width={3 * boxSize} height={3 * boxSize}
-                onClick={() => this.handleClick(isCross)}>
+                <svg width={3 * boxSize} height={3 * boxSize}>
                     <rect x={this.props.position[0] + 2}
                     y={this.props.position[1] + 2}
                     width={boxSize - 4} height={boxSize - 4}
@@ -83,7 +76,7 @@ class Symbol extends React.Component {
         // Draws only if visible, aka isCross != null
         return (
             isCross === null ? drawNull() :
-            (isCross ? drawCross(false) : drawCircle(true)));
+            (isCross ? drawCross() : drawCircle()));
     };
 }
 
