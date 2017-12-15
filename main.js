@@ -23,12 +23,16 @@ class Symbol extends React.Component {
         const drawCross = () => {
             return (
                     <svg width={3 * boxSize} height={3 * boxSize}>
-                        <line x1={this.props.position[0] + padding} y1={this.props.position[1] + padding}
-                        x2={this.props.position[0] + boxSize - padding} y2={this.props.position[1] + boxSize - padding}
+                        <line x1={this.props.position[0] + padding}
+                        y1={this.props.position[1] + padding}
+                        x2={this.props.position[0] + boxSize - padding}
+                        y2={this.props.position[1] + boxSize - padding}
                         strokeWidth="3" stroke="red"/>
 
-                        <line x1={this.props.position[0] + boxSize - padding} y1={this.props.position[1] + padding}
-                        x2={this.props.position[0] + padding} y2={this.props.position[1] + boxSize - padding}
+                        <line x1={this.props.position[0] + boxSize - padding}
+                        y1={this.props.position[1] + padding}
+                        x2={this.props.position[0] + padding}
+                        y2={this.props.position[1] + boxSize - padding}
                         strokeWidth="3" stroke="red"/>
                     </svg>
                 );
@@ -37,7 +41,8 @@ class Symbol extends React.Component {
         const drawCircle = () => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}>
-                    <circle cx={this.props.position[0] + boxSize/2} cy={this.props.position[1] + boxSize/2}
+                    <circle cx={this.props.position[0] + boxSize/2}
+                    cy={this.props.position[1] + boxSize/2}
                     r={boxSize/2 - padding}
                     strokeWidth="3" stroke="red" fillOpacity="0"/>
                 </svg>
