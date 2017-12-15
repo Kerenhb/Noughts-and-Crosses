@@ -55,7 +55,7 @@ class Symbol extends React.Component {
                     <circle cx={this.props.position[0] + boxSize/2}
                     cy={this.props.position[1] + boxSize/2}
                     r={boxSize/2 - padding}
-                    strokeWidth="3" stroke="red" fillOpacity="0"/>
+                    strokeWidth="3" stroke="blue" fillOpacity="0"/>
                 </svg>
             );
         };
