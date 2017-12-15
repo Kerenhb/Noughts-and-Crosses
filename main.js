@@ -24,11 +24,6 @@ class Symbol extends React.Component {
         const drawCross = isCross => {
             return (
                     <svg width={3 * boxSize} height={3 * boxSize}>
-                        <rect x={this.props.position[0] + 2}
-                        y={this.props.position[1] + 2}
-                        width={boxSize - 4} height={boxSize - 4}
-                        fillOpacity="0"/>
-
                         <line x1={this.props.position[0] + padding}
                         y1={this.props.position[1] + padding}
                         x2={this.props.position[0] + boxSize - padding}
@@ -47,11 +42,6 @@ class Symbol extends React.Component {
         const drawCircle = isCross => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}>
-                    <rect x={this.props.position[0] + 2}
-                    y={this.props.position[1] + 2}
-                    width={boxSize - 4} height={boxSize - 4}
-                    fillOpacity="0"/>
-
                     <circle cx={this.props.position[0] + boxSize/2}
                     cy={this.props.position[1] + boxSize/2}
                     r={boxSize/2 - padding}
