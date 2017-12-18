@@ -12,7 +12,9 @@ class Symbol extends React.Component {
         this.setState({isCross: crossTurn});
     };
 
-
+    shouldComponentUpdate () {
+        return this.props.playing;
+      };
 
     render() {
         const boxSize = this.props.scale;
@@ -95,7 +97,7 @@ class Game extends React.Component {
         this.state = {
             crossTurn: true, // Who goes first
             scale: 100, // Overall relative scale (100 is normal)
-            playing: false // has the game ended?
+            playing: true // has the game ended?
         };
     }
 
