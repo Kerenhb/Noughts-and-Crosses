@@ -71,20 +71,13 @@ class Symbol extends React.Component {
 }
 
 class Slider extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { value: 105 };
-      }
-
     render () {
         return (<input
         type = "range"
         min={10} max={200} step={1}
-        value={this.state.value}
+        value={this.props.scale}
         onChange={event => {
-            this.setState({value: event.target.value});
-            this.props.Eventhandler(this.state.value);
+            this.props.Eventhandler(event.target.value);
             }}>
         </input>
         );
@@ -191,6 +184,7 @@ class Game extends React.Component {
                 <br />
                 <Slider
                     Eventhandler = {this.sliderHandler}
+                    scale = {scale}
                 ></Slider>
             </div>
         );
