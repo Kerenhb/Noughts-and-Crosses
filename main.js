@@ -74,13 +74,13 @@ class Slider extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { value: 100 };
+        this.state = { value: 105 };
       }
 
     render () {
         return (<input
         type = "range"
-        min={1} max={201} step={1}
+        min={10} max={200} step={1}
         value={this.state.value}
         onChange={event => {
             this.setState({value: event.target.value});
