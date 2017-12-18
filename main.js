@@ -92,6 +92,7 @@ class Game extends React.Component {
             scale: 100, // Overall relative scale (100 is normal)
             playing: true, // has the game ended?
             gameState: [[null, null, null], [null, null, null], [null, null, null]],
+            winLine: null,
         };
     }
 
@@ -115,15 +116,24 @@ class Game extends React.Component {
 
     hasWon() {
         const gameState = this.state.gameState;
-        if (gameState[0][0] === gameState[1][1] && gameState[0][0]  === gameState[2][2] && gameState[0][0] != null)
+        const boxSize = this.state.scale;
+        if (gameState[0][0] === gameState[1][1] && gameState[0][0]  === gameState[2][2] && gameState[0][0] != null) {
+            this.setState({winLine: this.drawLine(0, 0, 3 * boxSize, 3 * boxSize)});
             return true
-        if (gameState[2][0] === gameState[1][1] && gameState[0][2]  === gameState[0][2] && gameState[2][0] != null)
+        }
+        if (gameState[2][0] === gameState[1][1] && gameState[0][2]  === gameState[0][2] && gameState[2][0] != null) {
+            this.setState({winLine: this.drawLine(3 * boxSize, 0, 0, 3 * boxSize)});
             return true
+        }
         for (let i = 0; i < 3; i++) {
-            if (gameState[0][i] === gameState[1][i] && gameState[0][i] === gameState[2][i] && gameState[0][i] != null)
+            if (gameState[0][i] === gameState[1][i] && gameState[0][i] === gameState[2][i] && gameState[0][i] != null) {
+                this.setState({winLine: this.drawLine(boxSize/2 + i * boxSize, 0, boxSize/2 + i * boxSize, 3 * boxSize)});
                 return true
-            if (gameState[i][0] === gameState[i][1] && gameState[i][0] === gameState[i][2] && gameState[i][0] != null)
+            }
+            if (gameState[i][0] === gameState[i][1] && gameState[i][0] === gameState[i][2] && gameState[i][0] != null) {
+                this.setState({winLine: this.drawLine(0, boxSize/2 + i * boxSize, 3 * boxSize, boxSize/2 + i * boxSize)});
                 return true
+            }
         }
         return false
     }
@@ -220,6 +230,8 @@ class Game extends React.Component {
                         playing = {playing}
                         isCross = {gameState[2][2]}
                     />
+
+                    {this.state.winLine}
                 </svg>
 
                 <br />
