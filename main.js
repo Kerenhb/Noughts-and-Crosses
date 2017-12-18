@@ -14,8 +14,9 @@ class Symbol extends React.Component {
 
     render() {
         const boxSize = this.props.scale;
+
         const padding = this.props.scale / 7;
-        const strokeSize = this.props.scale /30;
+        const strokeSize = this.props.scale / 30;
         const lineSize = this.props.scale / 25;
 
         const drawCross = () => {
@@ -77,7 +78,7 @@ class Slider extends React.Component {
         min={10} max={200} step={1}
         value={this.props.scale}
         onChange={event => {
-            this.props.Eventhandler(event.target.value);
+            this.props.Eventhandler(event);
             }}>
         </input>
         );
@@ -108,8 +109,9 @@ class Game extends React.Component {
         this.setState({crossTurn: !crossTurn}); // Change turn
     };
 
-    sliderHandler(value) {
-        this.setState({scale: value});
+    sliderHandler(event) {
+        const scale = Number(event.target.value);
+        this.setState({scale: scale});
     }
 
     render () {

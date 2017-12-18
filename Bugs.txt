@@ -1,2 +1,0 @@
-- Middle + of symbols disappear when slider is used.
-- X's in corner break up in weird ways when slider is used (O's ok).
