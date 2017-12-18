@@ -121,7 +121,7 @@ class Game extends React.Component {
             this.setState({winLine: this.drawLine(0, 0, 3 * boxSize, 3 * boxSize)});
             return true
         }
-        if (gameState[2][0] === gameState[1][1] && gameState[0][2]  === gameState[0][2] && gameState[2][0] != null) {
+        if (gameState[2][0] === gameState[1][1] && gameState[2][0]  === gameState[0][2] && gameState[2][0] != null) {
             this.setState({winLine: this.drawLine(3 * boxSize, 0, 0, 3 * boxSize)});
             return true
         }
