@@ -11,20 +11,21 @@ class Symbol extends React.Component {
         const padding = this.props.scale / 7;
         const strokeSize = this.props.scale / 30;
         const lineSize = this.props.scale / 25;
+        const position = this.props.position;
 
         const drawCross = () => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}>
-                    <line x1={this.props.position[0] + padding}
-                    y1={this.props.position[1] + padding}
-                    x2={this.props.position[0] + boxSize - padding}
-                    y2={this.props.position[1] + boxSize - padding}
+                    <line x1={position[0] + padding}
+                    y1={position[1] + padding}
+                    x2={position[0] + boxSize - padding}
+                    y2={position[1] + boxSize - padding}
                     strokeWidth={strokeSize} stroke="red"/>
 
-                    <line x1={this.props.position[0] + boxSize - padding}
-                    y1={this.props.position[1] + padding}
-                    x2={this.props.position[0] + padding}
-                    y2={this.props.position[1] + boxSize - padding}
+                    <line x1={position[0] + boxSize - padding}
+                    y1={position[1] + padding}
+                    x2={position[0] + padding}
+                    y2={position[1] + boxSize - padding}
                     strokeWidth={strokeSize} stroke="red"/>
                 </svg>
             );
@@ -33,8 +34,8 @@ class Symbol extends React.Component {
         const drawCircle = () => {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}>
-                    <circle cx={this.props.position[0] + boxSize/2}
-                    cy={this.props.position[1] + boxSize/2}
+                    <circle cx={position[0] + boxSize/2}
+                    cy={position[1] + boxSize/2}
                     r={boxSize/2 - padding}
                     strokeWidth={strokeSize} stroke="blue" fillOpacity="0"/>
                 </svg>
@@ -46,12 +47,12 @@ class Symbol extends React.Component {
                 <svg width={3 * boxSize} height={3 * boxSize}
                     onClick={() => {
                         this.props.mainClickHandler(
-                            this.props.position[0] / boxSize,
-                            this.props.position[1] / boxSize
+                            position[0] / boxSize,
+                            position[1] / boxSize
                         );
                     }}>
-                    <rect x={this.props.position[0] + lineSize / 2}
-                    y={this.props.position[1] + lineSize / 2}
+                    <rect x={position[0] + lineSize / 2}
+                    y={position[1] + lineSize / 2}
                     width={boxSize - lineSize} height={boxSize - lineSize}
                     fillOpacity="0"/>
                 </svg>
