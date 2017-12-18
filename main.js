@@ -12,9 +12,10 @@ class Symbol extends React.Component {
         this.setState({isCross: crossTurn});
     };
 
+
+
     render() {
         const boxSize = this.props.scale;
-
         const padding = this.props.scale / 7;
         const strokeSize = this.props.scale / 30;
         const lineSize = this.props.scale / 25;
@@ -93,7 +94,8 @@ class Game extends React.Component {
 
         this.state = {
             crossTurn: true, // Who goes first
-            scale: 100 // Overall relative scale (100 is normal)
+            scale: 100, // Overall relative scale (100 is normal)
+            playing: false // has the game ended?
         };
     }
 
@@ -118,6 +120,7 @@ class Game extends React.Component {
         const scale = this.state.scale;
         const boxSize = this.state.scale; // Size of each space
         const crossTurn = this.state.crossTurn;
+        const playing = this.state.playing;
 
         return (
             <div>
@@ -132,54 +135,63 @@ class Game extends React.Component {
                         position = {[0, 0]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
+                        playing = {playing}
                     />
                     <Symbol
                         scale = {scale}
                         position = {[boxSize, 0]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
+                        playing = {playing}
                     />
                     <Symbol
                         scale = {scale}
                         position = {[2 * boxSize, 0]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
+                        playing = {playing}
                     />
                     <Symbol
                         scale = {scale}
                         position = {[0, boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
+                        playing = {playing}
                     />
                     <Symbol
                         scale = {scale}
                         position = {[boxSize, boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
+                        playing = {playing}
                     />
                     <Symbol
                         scale = {scale}
                         position = {[2 * boxSize, boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
+                        playing = {playing}
                     />
                     <Symbol
                         scale = {scale}
                         position = {[0, 2 * boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
+                        playing = {playing}
                     />
                     <Symbol
                         scale = {scale}
                         position = {[boxSize, 2 * boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
+                        playing = {playing}
                     />
                     <Symbol
                         scale = {scale}
                         position = {[2 * boxSize, 2 * boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
+                        playing = {playing}
                     />
                 </svg>
 
