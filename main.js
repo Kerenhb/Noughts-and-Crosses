@@ -108,9 +108,25 @@ class Game extends React.Component {
         gameState[y][x] = crossTurn;
         this.setState({
             crossTurn: !crossTurn, // Change turn
-            gameState: gameState // update symbol
+            gameState: gameState, // update symbol
+            playing: !this.hasWon(),
         });
     };
+
+    hasWon() {
+        const gameState = this.state.gameState;
+        if (gameState[0][0] === gameState[1][1] && gameState[0][0]  === gameState[2][2] && gameState[0][0] != null)
+            return true
+        if (gameState[2][0] === gameState[1][1] && gameState[0][2]  === gameState[0][2] && gameState[2][0] != null)
+            return true
+        for (let i = 0; i < 3; i++) {
+            if (gameState[0][i] === gameState[1][i] && gameState[0][i] === gameState[2][i] && gameState[0][i] != null)
+                return true
+            if (gameState[i][0] === gameState[i][1] && gameState[i][0] === gameState[i][2] && gameState[i][0] != null)
+                return true
+        }
+        return false
+    }
 
     sliderHandler(event) {
         const scale = Number(event.target.value);
