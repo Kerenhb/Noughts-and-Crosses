@@ -70,10 +70,32 @@ class Symbol extends React.Component {
     };
 }
 
+class Slider extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { value: 100 };
+      }
+
+    render () {
+        return (<input
+        type = "range"
+        min={1} max={201} step={1}
+        value={this.state.value}
+        onChange={event => {
+            this.setState({value: event.target.value});
+            this.props.Eventhandler(this.state.value);
+            }}>
+        </input>
+        );
+    }
+}
+
 class Game extends React.Component {
     constructor(props) {
         super(props);
         this.handleNullClick = this.handleNullClick.bind(this);
+        this.sliderHandler = this.sliderHandler.bind(this);
 
         this.state = {
             crossTurn: true, // Who goes first
@@ -93,73 +115,84 @@ class Game extends React.Component {
         this.setState({crossTurn: !crossTurn}); // Change turn
     };
 
+    sliderHandler(value) {
+        this.setState({scale: value});
+    }
+
     render () {
         const scale = this.state.scale;
         const boxSize = this.state.scale; // Size of each space
         const crossTurn = this.state.crossTurn;
 
         return (
-            <svg width={3 * boxSize} height={3 * boxSize}>
-                {this.drawLine(0, boxSize, 3 * boxSize, boxSize)}
-                {this.drawLine(0, 2 * boxSize, 3 * boxSize, 2 * boxSize)}
-                {this.drawLine(boxSize, 0, boxSize, 3 * boxSize)}
-                {this.drawLine(2 * boxSize, 0, 2 * boxSize, 3 * boxSize)}
+            <div>
+                <svg width={3 * boxSize} height={3 * boxSize}>
+                    {this.drawLine(0, boxSize, 3 * boxSize, boxSize)}
+                    {this.drawLine(0, 2 * boxSize, 3 * boxSize, 2 * boxSize)}
+                    {this.drawLine(boxSize, 0, boxSize, 3 * boxSize)}
+                    {this.drawLine(2 * boxSize, 0, 2 * boxSize, 3 * boxSize)}
 
-                <Symbol
-                    scale = {scale}
-                    position = {[0, 0]}
-                    mainClickHandler = {this.handleNullClick}
-                    crossTurn = {crossTurn}
-                />
-                <Symbol
-                    scale = {scale}
-                    position = {[boxSize, 0]}
-                    mainClickHandler = {this.handleNullClick}
-                    crossTurn = {crossTurn}
-                />
-                <Symbol
-                    scale = {scale}
-                    position = {[2 * boxSize, 0]}
-                    mainClickHandler = {this.handleNullClick}
-                    crossTurn = {crossTurn}
-                />
-                <Symbol
-                    scale = {scale}
-                    position = {[0, boxSize]}
-                    mainClickHandler = {this.handleNullClick}
-                    crossTurn = {crossTurn}
-                />
-                <Symbol
-                    scale = {scale}
-                    position = {[boxSize, boxSize]}
-                    mainClickHandler = {this.handleNullClick}
-                    crossTurn = {crossTurn}
-                />
-                <Symbol
-                    scale = {scale}
-                    position = {[2 * boxSize, boxSize]}
-                    mainClickHandler = {this.handleNullClick}
-                    crossTurn = {crossTurn}
-                />
-                <Symbol
-                    scale = {scale}
-                    position = {[0, 2 * boxSize]}
-                    mainClickHandler = {this.handleNullClick}
-                    crossTurn = {crossTurn}
-                />
-                <Symbol
-                    scale = {scale}
-                    position = {[boxSize, 2 * boxSize]}
-                    mainClickHandler = {this.handleNullClick}
-                    crossTurn = {crossTurn}
-                />
-                <Symbol
-                    scale = {scale}
-                    position = {[2 * boxSize, 2 * boxSize]}
-                    mainClickHandler = {this.handleNullClick}
-                    crossTurn = {crossTurn}
-                />
-            </svg>
+                    <Symbol
+                        scale = {scale}
+                        position = {[0, 0]}
+                        mainClickHandler = {this.handleNullClick}
+                        crossTurn = {crossTurn}
+                    />
+                    <Symbol
+                        scale = {scale}
+                        position = {[boxSize, 0]}
+                        mainClickHandler = {this.handleNullClick}
+                        crossTurn = {crossTurn}
+                    />
+                    <Symbol
+                        scale = {scale}
+                        position = {[2 * boxSize, 0]}
+                        mainClickHandler = {this.handleNullClick}
+                        crossTurn = {crossTurn}
+                    />
+                    <Symbol
+                        scale = {scale}
+                        position = {[0, boxSize]}
+                        mainClickHandler = {this.handleNullClick}
+                        crossTurn = {crossTurn}
+                    />
+                    <Symbol
+                        scale = {scale}
+                        position = {[boxSize, boxSize]}
+                        mainClickHandler = {this.handleNullClick}
+                        crossTurn = {crossTurn}
+                    />
+                    <Symbol
+                        scale = {scale}
+                        position = {[2 * boxSize, boxSize]}
+                        mainClickHandler = {this.handleNullClick}
+                        crossTurn = {crossTurn}
+                    />
+                    <Symbol
+                        scale = {scale}
+                        position = {[0, 2 * boxSize]}
+                        mainClickHandler = {this.handleNullClick}
+                        crossTurn = {crossTurn}
+                    />
+                    <Symbol
+                        scale = {scale}
+                        position = {[boxSize, 2 * boxSize]}
+                        mainClickHandler = {this.handleNullClick}
+                        crossTurn = {crossTurn}
+                    />
+                    <Symbol
+                        scale = {scale}
+                        position = {[2 * boxSize, 2 * boxSize]}
+                        mainClickHandler = {this.handleNullClick}
+                        crossTurn = {crossTurn}
+                    />
+                </svg>
+
+                <br />
+                <Slider
+                    Eventhandler = {this.sliderHandler}
+                ></Slider>
+            </div>
         );
     }
 }
