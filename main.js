@@ -2,10 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class Symbol extends React.Component {
-    shouldComponentUpdate () {
-        return this.props.playing;
-      };
-
     render() {
         const boxSize = this.props.scale;
         const padding = this.props.scale / 7;
@@ -92,13 +88,13 @@ class Game extends React.Component {
             scale: 100, // Overall relative scale (100 is normal)
             playing: true, // has the game ended?
             gameState: [[null, null, null], [null, null, null], [null, null, null]],
-            winLine: null,
+            winLineParams: [null, null, null, null],
         };
     }
 
-    drawLine(x1, y1, x2, y2) {
+    drawLine(params) {
         const scale = this.state.scale;
-        return <line x1={x1} y1={y1} x2={x2} y2={y2}
+        return <line x1={params[0]} y1={params[1]} x2={params[2]} y2={params[3]}
         strokeWidth={scale / 25}
         stroke="black"/>
     }
@@ -106,32 +102,33 @@ class Game extends React.Component {
     handleNullClick(x, y) {
         const crossTurn = this.state.crossTurn;
         const gameState = this.state.gameState;
-        gameState[y][x] = crossTurn;
-        this.setState({
-            crossTurn: !crossTurn, // Change turn
-            gameState: gameState, // update symbol
-            playing: !this.hasWon(),
-        });
+        if (this.state.playing) {
+            gameState[y][x] = crossTurn;
+            this.setState({
+                crossTurn: !crossTurn, // Change turn
+                gameState: gameState, // update symbol
+                playing: !this.hasWon(),
+            });
+        }
     };
 
     hasWon() {
         const gameState = this.state.gameState;
-        const boxSize = this.state.scale;
         if (gameState[0][0] === gameState[1][1] && gameState[0][0]  === gameState[2][2] && gameState[0][0] != null) {
-            this.setState({winLine: this.drawLine(0, 0, 3 * boxSize, 3 * boxSize)});
+            this.setState({winLineParams: [0, 0, 3, 3]});
             return true
         }
         if (gameState[2][0] === gameState[1][1] && gameState[2][0]  === gameState[0][2] && gameState[2][0] != null) {
-            this.setState({winLine: this.drawLine(3 * boxSize, 0, 0, 3 * boxSize)});
+            this.setState({winLineParams: [3, 0, 0, 3]});
             return true
         }
         for (let i = 0; i < 3; i++) {
             if (gameState[0][i] === gameState[1][i] && gameState[0][i] === gameState[2][i] && gameState[0][i] != null) {
-                this.setState({winLine: this.drawLine(boxSize/2 + i * boxSize, 0, boxSize/2 + i * boxSize, 3 * boxSize)});
+                this.setState({winLineParams: [1/2 + i, 0, 1/2 + i, 3]});
                 return true
             }
             if (gameState[i][0] === gameState[i][1] && gameState[i][0] === gameState[i][2] && gameState[i][0] != null) {
-                this.setState({winLine: this.drawLine(0, boxSize/2 + i * boxSize, 3 * boxSize, boxSize/2 + i * boxSize)});
+                this.setState({winLineParams: [0, 1/2 + i, 3, 1/2 + i]});
                 return true
             }
         }
@@ -147,23 +144,27 @@ class Game extends React.Component {
         const scale = this.state.scale;
         const boxSize = this.state.scale; // Size of each space
         const crossTurn = this.state.crossTurn;
-        const playing = this.state.playing;
         const gameState = this.state.gameState;
+        const winLineParams = this.state.winLineParams;
+        let scaledWinLineParams = [];
+
+        for (let i = 0; i < winLineParams.length; i++) {
+            scaledWinLineParams.push(winLineParams[i] * scale);
+        }
 
         return (
             <div>
                 <svg width={3 * boxSize} height={3 * boxSize}>
-                    {this.drawLine(0, boxSize, 3 * boxSize, boxSize)}
-                    {this.drawLine(0, 2 * boxSize, 3 * boxSize, 2 * boxSize)}
-                    {this.drawLine(boxSize, 0, boxSize, 3 * boxSize)}
-                    {this.drawLine(2 * boxSize, 0, 2 * boxSize, 3 * boxSize)}
+                    {this.drawLine([0, boxSize, 3 * boxSize, boxSize])}
+                    {this.drawLine([0, 2 * boxSize, 3 * boxSize, 2 * boxSize])}
+                    {this.drawLine([boxSize, 0, boxSize, 3 * boxSize])}
+                    {this.drawLine([2 * boxSize, 0, 2 * boxSize, 3 * boxSize])}
 
                     <Symbol
                         scale = {scale}
                         position = {[0, 0]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
-                        playing = {playing}
                         isCross = {gameState[0][0]}
                     />
                     <Symbol
@@ -171,7 +172,6 @@ class Game extends React.Component {
                         position = {[boxSize, 0]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
-                        playing = {playing}
                         isCross = {gameState[0][1]}
                     />
                     <Symbol
@@ -179,7 +179,6 @@ class Game extends React.Component {
                         position = {[2 * boxSize, 0]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
-                        playing = {playing}
                         isCross = {gameState[0][2]}
                     />
                     <Symbol
@@ -187,7 +186,6 @@ class Game extends React.Component {
                         position = {[0, boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
-                        playing = {playing}
                         isCross = {gameState[1][0]}
                     />
                     <Symbol
@@ -195,7 +193,6 @@ class Game extends React.Component {
                         position = {[boxSize, boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
-                        playing = {playing}
                         isCross = {gameState[1][1]}
                     />
                     <Symbol
@@ -203,7 +200,6 @@ class Game extends React.Component {
                         position = {[2 * boxSize, boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
-                        playing = {playing}
                         isCross = {gameState[1][2]}
                     />
                     <Symbol
@@ -211,7 +207,6 @@ class Game extends React.Component {
                         position = {[0, 2 * boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
-                        playing = {playing}
                         isCross = {gameState[2][0]}
                     />
                     <Symbol
@@ -219,7 +214,6 @@ class Game extends React.Component {
                         position = {[boxSize, 2 * boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
-                        playing = {playing}
                         isCross = {gameState[2][1]}
                     />
                     <Symbol
@@ -227,11 +221,10 @@ class Game extends React.Component {
                         position = {[2 * boxSize, 2 * boxSize]}
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
-                        playing = {playing}
                         isCross = {gameState[2][2]}
                     />
 
-                    {this.state.winLine}
+                    {this.drawLine(scaledWinLineParams)}
                 </svg>
 
                 <br />
