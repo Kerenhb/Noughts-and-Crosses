@@ -2,16 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class Symbol extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {isCross: null}; // Each symbol is either: blank, cross or a circle
-    };
-
-    ownClickHandler(props) {
-        const crossTurn = props.crossTurn;
-        this.setState({isCross: crossTurn});
-    };
-
     shouldComponentUpdate () {
         return this.props.playing;
       };
@@ -55,8 +45,10 @@ class Symbol extends React.Component {
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}
                     onClick={() => {
-                        this.props.mainClickHandler();
-                        this.ownClickHandler(this.props);
+                        this.props.mainClickHandler(
+                            this.props.position[0] / boxSize,
+                            this.props.position[1] / boxSize
+                        );
                     }}>
                     <rect x={this.props.position[0] + lineSize / 2}
                     y={this.props.position[1] + lineSize / 2}
@@ -66,7 +58,7 @@ class Symbol extends React.Component {
             );
         };
 
-        const isCross = this.state.isCross;
+        const isCross = this.props.isCross;
         // Draws only if visible, aka isCross != null
         return (
             isCross === null ? drawNull() :
@@ -97,7 +89,8 @@ class Game extends React.Component {
         this.state = {
             crossTurn: true, // Who goes first
             scale: 100, // Overall relative scale (100 is normal)
-            playing: true // has the game ended?
+            playing: true, // has the game ended?
+            gameState: [[null, null, null], [null, null, null], [null, null, null]],
         };
     }
 
@@ -108,9 +101,14 @@ class Game extends React.Component {
         stroke="black"/>
     }
 
-    handleNullClick() {
+    handleNullClick(x, y) {
         const crossTurn = this.state.crossTurn;
-        this.setState({crossTurn: !crossTurn}); // Change turn
+        const gameState = this.state.gameState;
+        gameState[y][x] = crossTurn;
+        this.setState({
+            crossTurn: !crossTurn, // Change turn
+            gameState: gameState // update symbol
+        });
     };
 
     sliderHandler(event) {
@@ -123,6 +121,7 @@ class Game extends React.Component {
         const boxSize = this.state.scale; // Size of each space
         const crossTurn = this.state.crossTurn;
         const playing = this.state.playing;
+        const gameState = this.state.gameState;
 
         return (
             <div>
@@ -138,6 +137,7 @@ class Game extends React.Component {
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
                         playing = {playing}
+                        isCross = {gameState[0][0]}
                     />
                     <Symbol
                         scale = {scale}
@@ -145,6 +145,7 @@ class Game extends React.Component {
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
                         playing = {playing}
+                        isCross = {gameState[0][1]}
                     />
                     <Symbol
                         scale = {scale}
@@ -152,6 +153,7 @@ class Game extends React.Component {
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
                         playing = {playing}
+                        isCross = {gameState[0][2]}
                     />
                     <Symbol
                         scale = {scale}
@@ -159,6 +161,7 @@ class Game extends React.Component {
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
                         playing = {playing}
+                        isCross = {gameState[1][0]}
                     />
                     <Symbol
                         scale = {scale}
@@ -166,6 +169,7 @@ class Game extends React.Component {
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
                         playing = {playing}
+                        isCross = {gameState[1][1]}
                     />
                     <Symbol
                         scale = {scale}
@@ -173,6 +177,7 @@ class Game extends React.Component {
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
                         playing = {playing}
+                        isCross = {gameState[1][2]}
                     />
                     <Symbol
                         scale = {scale}
@@ -180,6 +185,7 @@ class Game extends React.Component {
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
                         playing = {playing}
+                        isCross = {gameState[2][0]}
                     />
                     <Symbol
                         scale = {scale}
@@ -187,6 +193,7 @@ class Game extends React.Component {
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
                         playing = {playing}
+                        isCross = {gameState[2][1]}
                     />
                     <Symbol
                         scale = {scale}
@@ -194,6 +201,7 @@ class Game extends React.Component {
                         mainClickHandler = {this.handleNullClick}
                         crossTurn = {crossTurn}
                         playing = {playing}
+                        isCross = {gameState[2][2]}
                     />
                 </svg>
 
