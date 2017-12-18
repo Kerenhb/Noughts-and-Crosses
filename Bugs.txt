@@ -1,0 +1,1 @@
+- Symbols don't scale if game has been won
