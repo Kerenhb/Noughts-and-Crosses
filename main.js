@@ -67,7 +67,7 @@ class Slider extends React.Component {
     render () {
         return (<input
         type = "range"
-        min={10} max={300} step={1}
+        min={40} max={340} step={1}
         value={this.props.scale}
         onChange={event => {
             this.props.Eventhandler(event);
@@ -165,6 +165,7 @@ class Game extends React.Component {
     render () {
         const scale = this.state.scale; // Size of each space
         const winLineParams = this.state.winLineParams;
+        const fontSize = Math.max(scale / 10, 10);
         let scaledWinLineParams = [];
 
         for (let i = 0; i < winLineParams.length; i++) {
@@ -173,6 +174,18 @@ class Game extends React.Component {
 
         return (
             <div>
+                <table style={{fontSize: `${fontSize}px`}} padding="0"><tbody>
+                    <tr>
+                        <td width={scale} align="center" >Player 1: Name (<span style={{"color":"red"}}>x</span>)</td>
+                        <td width={scale}></td>
+                        <td width={scale} align="center">Player 2: Name (<span style={{"color":"blue"}}>o</span>)</td>
+                    </tr>
+                    <tr>
+                        <td width={scale}></td>
+                        <td width={scale} align="center">Player ?'s turn</td>
+                    </tr>
+                </tbody></table><br/>
+
                 <svg width={3 * scale} height={3 * scale}>
                     {this.drawLine([0, scale, 3 * scale, scale])}
                     {this.drawLine([0, 2 * scale, 3 * scale, 2 * scale])}
