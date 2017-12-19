@@ -67,7 +67,7 @@ class Slider extends React.Component {
     render () {
         return (<input
         type = "range"
-        min={10} max={200} step={1}
+        min={10} max={300} step={1}
         value={this.props.scale}
         onChange={event => {
             this.props.Eventhandler(event);
@@ -85,7 +85,7 @@ class Game extends React.Component {
 
         this.state = {
             crossTurn: true, // Who goes first
-            scale: 100, // Overall relative scale (100 is normal)
+            scale: 200, // Overall relative scale (100 is normal)
             playing: true, // has the game ended?
             gameState: [[null, null, null], [null, null, null], [null, null, null]],
             winLineParams: [null, null, null, null],
