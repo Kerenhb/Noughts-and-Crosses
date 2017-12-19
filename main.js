@@ -140,11 +140,29 @@ class Game extends React.Component {
         this.setState({scale: scale});
     }
 
-    render () {
+    drawSymbols() {
         const scale = this.state.scale;
-        const boxSize = this.state.scale; // Size of each space
         const crossTurn = this.state.crossTurn;
         const gameState = this.state.gameState;
+        let element = [];
+
+        for (let i = 0; i < 9; i++) {
+            element[i] = {X: Math.floor(i/3), Y: i % 3};
+        }
+
+        return element.map(element => (
+            <Symbol
+            scale = {scale}
+            position = {[element.Y * scale, element.X * scale]}
+            mainClickHandler = {this.handleNullClick}
+            crossTurn = {crossTurn}
+            isCross = {gameState[element.X] [element.Y]}
+            />
+        ));
+    }
+
+    render () {
+        const scale = this.state.scale; // Size of each space
         const winLineParams = this.state.winLineParams;
         let scaledWinLineParams = [];
 
@@ -154,76 +172,12 @@ class Game extends React.Component {
 
         return (
             <div>
-                <svg width={3 * boxSize} height={3 * boxSize}>
-                    {this.drawLine([0, boxSize, 3 * boxSize, boxSize])}
-                    {this.drawLine([0, 2 * boxSize, 3 * boxSize, 2 * boxSize])}
-                    {this.drawLine([boxSize, 0, boxSize, 3 * boxSize])}
-                    {this.drawLine([2 * boxSize, 0, 2 * boxSize, 3 * boxSize])}
-
-                    <Symbol
-                        scale = {scale}
-                        position = {[0, 0]}
-                        mainClickHandler = {this.handleNullClick}
-                        crossTurn = {crossTurn}
-                        isCross = {gameState[0][0]}
-                    />
-                    <Symbol
-                        scale = {scale}
-                        position = {[boxSize, 0]}
-                        mainClickHandler = {this.handleNullClick}
-                        crossTurn = {crossTurn}
-                        isCross = {gameState[0][1]}
-                    />
-                    <Symbol
-                        scale = {scale}
-                        position = {[2 * boxSize, 0]}
-                        mainClickHandler = {this.handleNullClick}
-                        crossTurn = {crossTurn}
-                        isCross = {gameState[0][2]}
-                    />
-                    <Symbol
-                        scale = {scale}
-                        position = {[0, boxSize]}
-                        mainClickHandler = {this.handleNullClick}
-                        crossTurn = {crossTurn}
-                        isCross = {gameState[1][0]}
-                    />
-                    <Symbol
-                        scale = {scale}
-                        position = {[boxSize, boxSize]}
-                        mainClickHandler = {this.handleNullClick}
-                        crossTurn = {crossTurn}
-                        isCross = {gameState[1][1]}
-                    />
-                    <Symbol
-                        scale = {scale}
-                        position = {[2 * boxSize, boxSize]}
-                        mainClickHandler = {this.handleNullClick}
-                        crossTurn = {crossTurn}
-                        isCross = {gameState[1][2]}
-                    />
-                    <Symbol
-                        scale = {scale}
-                        position = {[0, 2 * boxSize]}
-                        mainClickHandler = {this.handleNullClick}
-                        crossTurn = {crossTurn}
-                        isCross = {gameState[2][0]}
-                    />
-                    <Symbol
-                        scale = {scale}
-                        position = {[boxSize, 2 * boxSize]}
-                        mainClickHandler = {this.handleNullClick}
-                        crossTurn = {crossTurn}
-                        isCross = {gameState[2][1]}
-                    />
-                    <Symbol
-                        scale = {scale}
-                        position = {[2 * boxSize, 2 * boxSize]}
-                        mainClickHandler = {this.handleNullClick}
-                        crossTurn = {crossTurn}
-                        isCross = {gameState[2][2]}
-                    />
-
+                <svg width={3 * scale} height={3 * scale}>
+                    {this.drawLine([0, scale, 3 * scale, scale])}
+                    {this.drawLine([0, 2 * scale, 3 * scale, 2 * scale])}
+                    {this.drawLine([scale, 0, scale, 3 * scale])}
+                    {this.drawLine([2 * scale, 0, 2 * scale, 3 * scale])}
+                    {this.drawSymbols()}
                     {this.drawLine(scaledWinLineParams)}
                 </svg>
 
