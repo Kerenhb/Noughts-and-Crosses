@@ -147,17 +147,17 @@ class Game extends React.Component {
         let element = [];
 
         for (let i = 0; i < 9; i++) {
-            element[i] = {X: Math.floor(i/3), Y: i % 3, key: i};
+            element[i] = {X: Math.floor(i/3), Y: i % 3};
         }
 
-        return element.map(element => (
+        return element.map((element, index) => (
             <Symbol
             scale = {scale}
             position = {[element.Y * scale, element.X * scale]}
             mainClickHandler = {this.handleNullClick}
             crossTurn = {crossTurn}
             isCross = {gameState[element.X] [element.Y]}
-            key = {element.key}
+            key = {index}
             />
         ));
     }
