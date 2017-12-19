@@ -183,9 +183,15 @@ class Game extends React.Component {
                     </tr>
                     <tr>
                         <td width={scale}></td>
-                        <td width={scale} align="center">{crossTurn ?
-                            <span style={{"color":"red"}}>x</span> :
-                            <span style={{"color":"blue"}}>o</span>}'s' turn</td>
+                            {this.state.playing ?
+                                <td width={scale} align="center">{crossTurn ?
+                                    <span style={{"color":"red"}}>x</span> : <span style={{"color":"blue"}}>o</span>}
+                                's' turn</td>
+                                :
+                                <td width={scale} align="center" style={{fontWeight:"bold"}}>{!crossTurn ?
+                                    <span style={{"color":"red"}}>x</span> : <span style={{"color":"blue"}}>o</span>}
+                                &nbsp;won!</td>}
+
                     </tr>
                 </tbody></table><br/>
 
