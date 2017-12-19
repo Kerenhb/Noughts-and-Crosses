@@ -7,7 +7,7 @@ class Symbol extends React.Component {
         const padding = this.props.scale / 7;
         const strokeSize = this.props.scale / 30;
         const lineSize = this.props.scale / 25;
-        const position = this.props.position;
+        const position = this.props.position; // Top left x and y coords
 
         const drawCross = () => {
             return (
@@ -38,7 +38,7 @@ class Symbol extends React.Component {
             );
         };
 
-        const drawNull = () => {
+        const drawNull = () => { // Draws an invisible clickable square to later become an X or O
             return (
                 <svg width={3 * boxSize} height={3 * boxSize}
                     onClick={() => {
@@ -63,7 +63,7 @@ class Symbol extends React.Component {
     };
 }
 
-class Slider extends React.Component {
+class Slider extends React.Component { // To change size of game
     render () {
         return (<input
         type = "range"
@@ -140,7 +140,7 @@ class Game extends React.Component {
         this.setState({scale: scale});
     }
 
-    drawSymbols() {
+    drawSymbols() { // Dynamically create all the symbols
         const scale = this.state.scale;
         const crossTurn = this.state.crossTurn;
         const gameState = this.state.gameState;
@@ -164,9 +164,9 @@ class Game extends React.Component {
 
     render () {
         const scale = this.state.scale; // Size of each space
-        const winLineParams = this.state.winLineParams;
+        const winLineParams = this.state.winLineParams; // For line though winning set
         const crossTurn = this.state.crossTurn;
-        const fontSize = Math.max(scale / 10, 10);
+        const fontSize = Math.max(scale / 10, 10); // Ensures readable text
         let scaledWinLineParams = [];
 
         for (let i = 0; i < winLineParams.length; i++) {
@@ -183,7 +183,7 @@ class Game extends React.Component {
                     </tr>
                     <tr>
                         <td width={scale}></td>
-                            {this.state.playing ?
+                            {this.state.playing ? // Whose turn it is or whoose won
                                 <td width={scale} align="center">{crossTurn ?
                                     <span style={{"color":"red"}}>x</span> : <span style={{"color":"blue"}}>o</span>}
                                 's' turn</td>
