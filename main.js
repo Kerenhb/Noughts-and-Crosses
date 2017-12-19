@@ -147,7 +147,7 @@ class Game extends React.Component {
         let element = [];
 
         for (let i = 0; i < 9; i++) {
-            element[i] = {X: Math.floor(i/3), Y: i % 3};
+            element[i] = {X: Math.floor(i/3), Y: i % 3, key: i};
         }
 
         return element.map(element => (
@@ -157,6 +157,7 @@ class Game extends React.Component {
             mainClickHandler = {this.handleNullClick}
             crossTurn = {crossTurn}
             isCross = {gameState[element.X] [element.Y]}
+            key = {element.key}
             />
         ));
     }
