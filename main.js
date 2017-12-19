@@ -89,6 +89,8 @@ class Game extends React.Component {
             playing: true, // has the game ended?
             gameState: [[null, null, null], [null, null, null], [null, null, null]],
             winLineParams: [null, null, null, null],
+            xScore: 0,
+            oScore: 0,
         };
     }
 
@@ -102,6 +104,7 @@ class Game extends React.Component {
     handleNullClick(x, y) {
         const crossTurn = this.state.crossTurn;
         const gameState = this.state.gameState;
+
         if (this.state.playing) {
             gameState[y][x] = crossTurn;
             this.setState({
@@ -116,23 +119,38 @@ class Game extends React.Component {
         const gameState = this.state.gameState;
         if (gameState[0][0] === gameState[1][1] && gameState[0][0]  === gameState[2][2] && gameState[0][0] != null) {
             this.setState({winLineParams: [0, 0, 3, 3]});
+            this.incrementScore()
             return true
         }
         if (gameState[2][0] === gameState[1][1] && gameState[2][0]  === gameState[0][2] && gameState[2][0] != null) {
             this.setState({winLineParams: [3, 0, 0, 3]});
+            this.incrementScore()
             return true
         }
         for (let i = 0; i < 3; i++) {
             if (gameState[0][i] === gameState[1][i] && gameState[0][i] === gameState[2][i] && gameState[0][i] != null) {
                 this.setState({winLineParams: [1/2 + i, 0, 1/2 + i, 3]});
+                this.incrementScore()
                 return true
             }
             if (gameState[i][0] === gameState[i][1] && gameState[i][0] === gameState[i][2] && gameState[i][0] != null) {
                 this.setState({winLineParams: [0, 1/2 + i, 3, 1/2 + i]});
+                this.incrementScore()
                 return true
             }
         }
         return false
+    }
+
+    incrementScore() {
+        if (this.state.crossTurn) // X won (called before crossTurn changes again)
+        {
+            this.setState({xScore: this.state.xScore += 1});
+        }
+        else // o won
+        {
+            this.setState({oScore: this.state.oScore += 1});
+        }
     }
 
     sliderHandler(event) {
@@ -177,9 +195,9 @@ class Game extends React.Component {
             <div>
                 <table style={{fontSize: `${fontSize}px`}} padding="0"><tbody>
                     <tr>
-                        <td width={scale} align="center" >Player 1: Name (<span style={{"color":"red"}}>x</span>)</td>
+                        <td width={scale} align="center" >Player 1 (<span style={{"color":"red"}}>x</span>)</td>
                         <td width={scale}></td>
-                        <td width={scale} align="center">Player 2: Name (<span style={{"color":"blue"}}>o</span>)</td>
+                        <td width={scale} align="center">Player 2 (<span style={{"color":"blue"}}>o</span>)</td>
                     </tr>
                     <tr>
                         <td width={scale}></td>
@@ -192,6 +210,11 @@ class Game extends React.Component {
                                     <span style={{"color":"red"}}>x</span> : <span style={{"color":"blue"}}>o</span>}
                                 &nbsp;won!</td>}
 
+                    </tr>
+                    <tr>
+                        <td width={scale} align="center">{this.state.xScore}</td>
+                        <td width={scale}></td>
+                        <td width={scale} align="center">{this.state.oScore}</td>
                     </tr>
                 </tbody></table><br/>
 
