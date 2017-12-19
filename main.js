@@ -165,6 +165,7 @@ class Game extends React.Component {
     render () {
         const scale = this.state.scale; // Size of each space
         const winLineParams = this.state.winLineParams;
+        const crossTurn = this.state.crossTurn;
         const fontSize = Math.max(scale / 10, 10);
         let scaledWinLineParams = [];
 
@@ -182,7 +183,9 @@ class Game extends React.Component {
                     </tr>
                     <tr>
                         <td width={scale}></td>
-                        <td width={scale} align="center">Player ?'s turn</td>
+                        <td width={scale} align="center">{crossTurn ?
+                            <span style={{"color":"red"}}>x</span> :
+                            <span style={{"color":"blue"}}>o</span>}'s' turn</td>
                     </tr>
                 </tbody></table><br/>
 
