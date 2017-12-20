@@ -11,6 +11,7 @@ export default class App extends React.Component {
             playerNames: ['Player 1', 'Player 2'],
             playerColors: ['#ff0000', '#0000ff'],
             player1starts: true,
+            startToggle: true, // change who starts each game
             gridSize: 3, // n * n grid
             showForm: true, // Display the form rather than the game
         };
@@ -19,6 +20,7 @@ export default class App extends React.Component {
         this.updateColor = this.updateColor.bind(this);
         this.updateWhoStarts = this.updateWhoStarts.bind(this);
         this.updateGridSize = this.updateGridSize.bind(this);
+        this.toggleOn = this.toggleOn.bind(this);
         this.onSumbit = this.onSumbit.bind(this);
     }
 
@@ -40,6 +42,10 @@ export default class App extends React.Component {
 
     updateGridSize(event) {
         this.setState({gridSize: event.target.value})
+    }
+
+    toggleOn(state) {
+        this.setState({startToggle: state});
     }
 
     onSumbit() {
@@ -93,6 +99,8 @@ export default class App extends React.Component {
                 updateWhoStarts = {this.updateWhoStarts}
                 updateGridSize = {this.updateGridSize}
                 gridSize = {this.state.gridSize}
+                startToggle = {this.state.startToggle}
+                toggleOn = {this.toggleOn}
                 onSumbit = {this.onSumbit}
             />
             : <Game

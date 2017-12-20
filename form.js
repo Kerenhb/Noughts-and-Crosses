@@ -28,6 +28,12 @@ export default class Form extends React.Component {
                 onChange = {event => {this.props.updateWhoStarts(0)}}/>&nbsp;&nbsp;
                 Player 2: <input type = 'radio' name = "start" checked = {!this.props.player1starts}
                 onChange = {event => {this.props.updateWhoStarts(1)}}/>
+                <br />
+                Change every game: yes <input type = 'radio' name = "change" checked = {this.props.startToggle}
+                onChange = {() => {this.props.toggleOn(true)}}/>&nbsp;&nbsp;
+                no <input type = 'radio' name = "change" checked = {!this.props.startToggle}
+                onChange = {() => {this.props.toggleOn(false)}}/>
+                <br />
 
                 <br /><br />
                 <button onClick = {this.props.onSumbit}>Sumbit</button>
