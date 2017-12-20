@@ -13,6 +13,7 @@ export default class App extends React.Component {
             player1starts: true,
             startToggle: true, // change who starts each game
             gridSize: 3, // n * n grid
+            numberOfGames: 1, // number of games to play
             showForm: true, // Display the form rather than the game
         };
 
@@ -20,6 +21,7 @@ export default class App extends React.Component {
         this.updateColor = this.updateColor.bind(this);
         this.updateWhoStarts = this.updateWhoStarts.bind(this);
         this.updateGridSize = this.updateGridSize.bind(this);
+        this.updateNumberOfGames = this.updateNumberOfGames.bind(this);
         this.toggleOn = this.toggleOn.bind(this);
         this.onSumbit = this.onSumbit.bind(this);
     }
@@ -42,6 +44,10 @@ export default class App extends React.Component {
 
     updateGridSize(event) {
         this.setState({gridSize: event.target.value})
+    }
+
+    updateNumberOfGames(event) {
+        this.setState({numberOfGames: event.target.value})
     }
 
     toggleOn(state) {
@@ -81,6 +87,10 @@ export default class App extends React.Component {
             errorString += "Grid size needs to smaller than 20\n";
         }
 
+        if (this.state.numberOfGames <= 0) {
+            errorString += "Need to play at least one game\n";
+        }
+
         if (errorString.length == 0) {
             this.setState({showForm: false}); // switch to game
         } else {
@@ -99,6 +109,8 @@ export default class App extends React.Component {
                 updateWhoStarts = {this.updateWhoStarts}
                 updateGridSize = {this.updateGridSize}
                 gridSize = {this.state.gridSize}
+                updateNumberOfGames = {this.updateNumberOfGames}
+                numberOfGames = {this.state.numberOfGames}
                 startToggle = {this.state.startToggle}
                 toggleOn = {this.toggleOn}
                 onSumbit = {this.onSumbit}
@@ -108,6 +120,7 @@ export default class App extends React.Component {
                 player1starts = {this.state.player1starts}
                 playerColors = {this.state.playerColors}
                 gridSize = {Number(this.state.gridSize)}
+                numberOfGames = {Number(this.state.numberOfGames)}
                 startToggle = {this.state.startToggle}
             />
         )

@@ -22,6 +22,9 @@ export default class Form extends React.Component {
                 <h3>Misc Settings</h3>
                 Grid size: <input type="number" value = {this.props.gridSize}
                 onChange = {event => {this.props.updateGridSize(event)}} />
+                <br />
+                Number of games to play: <input type="number" value = {this.props.numberOfGames}
+                onChange = {event => {this.props.updateNumberOfGames(event)}} />
 
                 <h4>Who starts?</h4>
                 Player 1: <input type = 'radio' name = "start" checked = {this.props.player1starts}
