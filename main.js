@@ -87,6 +87,7 @@ class Game extends React.Component {
             crossTurn: true, // Who goes first
             scale: 200, // Overall relative scale (100 is normal)
             playing: true, // has the game ended?
+            draw: false,
             gameState: [[null, null, null], [null, null, null], [null, null, null]],
             winLineParams: [null, null, null, null],
             xScore: 0,
@@ -139,6 +140,11 @@ class Game extends React.Component {
                 return true
             }
         }
+        if (gameState.every((row) => row.every((elm) => elm !== null))) {
+            // check that board is completly full, aka draw - therefore no score update
+            this.setState({draw: true});
+            return true;
+        }
         return false
     }
 
@@ -183,6 +189,7 @@ class Game extends React.Component {
     newGame() {
         this.setState({
             playing: true,
+            draw: false,
             crossTurn: true,
             gameState: [[null, null, null], [null, null, null], [null, null, null]],
             winLineParams: [null, null, null, null],
@@ -211,14 +218,17 @@ class Game extends React.Component {
                     </tr>
                     <tr>
                         <td width={scale}></td>
-                            {this.state.playing ? // Whose turn it is or whoose won
-                                <td width={scale} align="center">{crossTurn ?
+                            {this.state.playing ?
+                                <td width={scale} align="center">{crossTurn ? // Whoose turn is it?
                                     <span style={{"color":"red"}}>x</span> : <span style={{"color":"blue"}}>o</span>}
                                 's' turn</td>
-                                :
-                                <td width={scale} align="center" style={{fontWeight:"bold"}}>{!crossTurn ?
+                                : (this.state.draw ? // Is it a draw?
+                                    <td width={scale} align="center" style={{fontWeight:"bold"}}>It's a draw</td>
+                                    :
+                                    <td width={scale} align="center" style={{fontWeight:"bold"}}>{!crossTurn ? // Who won?
                                     <span style={{"color":"red"}}>x</span> : <span style={{"color":"blue"}}>o</span>}
-                                &nbsp;won!</td>}
+                                    &nbsp;won!</td>
+                                )}
 
                     </tr>
                     <tr>
