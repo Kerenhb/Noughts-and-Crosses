@@ -9,7 +9,7 @@ export default class Game extends React.Component {
         this.sliderHandler = this.sliderHandler.bind(this);
 
         this.state = {
-            crossTurn: true, // Who goes first
+            crossTurn: this.props.player1starts, // Who goes first
             scale: 200, // Overall relative scale (100 is normal)
             playing: true, // has the game ended?
             draw: false,
@@ -115,7 +115,7 @@ export default class Game extends React.Component {
         this.setState({
             playing: true,
             draw: false,
-            crossTurn: true,
+            crossTurn: this.props.player1starts,
             gameState: [[null, null, null], [null, null, null], [null, null, null]],
             winLineParams: [null, null, null, null],
         });

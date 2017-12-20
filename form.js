@@ -11,7 +11,7 @@ export default class Form extends React.Component {
                 Color: <input type="color" value = {this.props.playerColors[0]}
                 onChange = {event => {this.props.updateColor(event, 0)}}/>
                 <br />
-                Starts first: <input type = 'radio' name = "start" checked = {this.props.whoStarts}
+                Starts first: <input type = 'radio' name = "start" checked = {this.props.player1starts}
                 onChange = {event => {this.props.updateWhoStarts(0)}}/>
 
                 <h3>Player 2</h3>
@@ -21,7 +21,7 @@ export default class Form extends React.Component {
                 Color: <input type="color" value = {this.props.playerColors[1]}
                 onChange = {event => {this.props.updateColor(event, 1)}}/>
                 <br />
-                Starts first: <input type = 'radio' name = "start" checked = {!this.props.whoStarts}
+                Starts first: <input type = 'radio' name = "start" checked = {!this.props.player1starts}
                 onChange = {event => {this.props.updateWhoStarts(1)}}/>
 
                 <br /><br />

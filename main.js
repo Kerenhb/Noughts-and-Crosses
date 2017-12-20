@@ -10,7 +10,7 @@ export default class App extends React.Component {
         this.state = {
             playerNames: ['Player 1', 'Player 2'],
             playerColors: ['#ff0000', '#0000ff'],
-            player1Cross: true, // Player 1 is X and therefore starts
+            player1starts: true,
             showForm: true, // Display the form rather than the game
         };
 
@@ -33,7 +33,7 @@ export default class App extends React.Component {
     }
 
     updateWhoStarts(playerNumber) {
-        this.setState({player1Cross: !playerNumber}) // 0 = player 1, 1 = player 2
+        this.setState({player1starts: !playerNumber}) // 0 = player 1, 1 = player 2
     }
 
     onSumbit() {
@@ -47,12 +47,13 @@ export default class App extends React.Component {
                 updateName = {this.updateName}
                 playerColors = {this.state.playerColors}
                 updateColor = {this.updateColor}
-                whoStarts = {this.state.player1Cross}
+                player1starts = {this.state.player1starts}
                 updateWhoStarts = {this.updateWhoStarts}
                 onSumbit = {this.onSumbit}
             />
             : <Game
                 playerNames = {this.state.playerNames}
+                player1starts = {this.state.player1starts}
             />
         )
     };
