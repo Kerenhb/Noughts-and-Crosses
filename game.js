@@ -18,6 +18,7 @@ export default class Game extends React.Component {
             winLineParams: [null, null, null, null],
             p1Score: 0,
             p2Score: 0,
+            numberOfGamesPlayed: 0, // can't just add scores due to draws
         };
     }
 
@@ -139,14 +140,20 @@ export default class Game extends React.Component {
 
     newGame() {
         const gridSize = this.props.gridSize;
+        const numberOfGamesPlayed = this.state.numberOfGamesPlayed + 1;
         this.setState({
             playing: true,
             draw: false,
-            crossTurn: this.props.player1starts,
+            crossTurn: (this.props.startToggle) ? this.whoStarts() : this.props.player1starts,
             gameState: Array.from({length: gridSize}, row => Array(gridSize).fill(null)),
             winLineParams: [null, null, null, null],
+            numberOfGamesPlayed: numberOfGamesPlayed,
         });
 
+    }
+
+    whoStarts() { // toggle is on
+        return (this.state.numberOfGamesPlayed % 2) ? this.props.player1starts : !this.props.player1starts;
     }
 
     render () {

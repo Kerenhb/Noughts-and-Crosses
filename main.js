@@ -108,6 +108,7 @@ export default class App extends React.Component {
                 player1starts = {this.state.player1starts}
                 playerColors = {this.state.playerColors}
                 gridSize = {Number(this.state.gridSize)}
+                startToggle = {this.state.startToggle}
             />
         )
     };
