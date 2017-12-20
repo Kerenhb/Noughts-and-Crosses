@@ -6,10 +6,11 @@ export default class Symbol extends React.Component {
         const strokeSize = this.props.scale / 30;
         const lineSize = this.props.scale / 25;
         const position = this.props.position; // Top left x and y coords
+        const gridSize = this.props.gridSize;
 
         const drawCross = () => {
             return (
-                <svg width={3 * boxSize} height={3 * boxSize}>
+                <svg width={gridSize * boxSize} height={gridSize * boxSize}>
                     <line x1={position[0] + padding}
                     y1={position[1] + padding}
                     x2={position[0] + boxSize - padding}
@@ -27,7 +28,7 @@ export default class Symbol extends React.Component {
 
         const drawCircle = () => {
             return (
-                <svg width={3 * boxSize} height={3 * boxSize}>
+                <svg width={gridSize * boxSize} height={gridSize * boxSize}>
                     <circle cx={position[0] + boxSize/2}
                     cy={position[1] + boxSize/2}
                     r={boxSize/2 - padding}
@@ -38,7 +39,7 @@ export default class Symbol extends React.Component {
 
         const drawNull = () => { // Draws an invisible clickable square to later become an X or O
             return (
-                <svg width={3 * boxSize} height={3 * boxSize}
+                <svg width={gridSize * boxSize} height={gridSize * boxSize}
                     onClick={() => {
                         this.props.mainClickHandler(
                             position[0] / boxSize,

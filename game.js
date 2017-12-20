@@ -8,23 +8,17 @@ export default class Game extends React.Component {
         this.handleNullClick = this.handleNullClick.bind(this);
         this.sliderHandler = this.sliderHandler.bind(this);
 
+        const gridSize = this.props.gridSize;
         this.state = {
             crossTurn: this.props.player1starts, // Who goes first
             scale: 200, // Overall relative scale (100 is normal)
             playing: true, // has the game ended?
             draw: false,
-            gameState: [[null, null, null], [null, null, null], [null, null, null]],
+            gameState: Array.from({length: gridSize}, row => Array(gridSize).fill(null)),
             winLineParams: [null, null, null, null],
             p1Score: 0,
             p2Score: 0,
         };
-    }
-
-    drawLine(params) {
-        const scale = this.state.scale;
-        return <line x1={params[0]} y1={params[1]} x2={params[2]} y2={params[3]}
-        strokeWidth={scale / 25}
-        stroke="black"/>
     }
 
     handleNullClick(x, y) {
@@ -43,24 +37,26 @@ export default class Game extends React.Component {
 
     hasWon() {
         const gameState = this.state.gameState;
-        if (gameState[0][0] === gameState[1][1] && gameState[0][0]  === gameState[2][2] && gameState[0][0] != null) {
-            this.setState({winLineParams: [0, 0, 3, 3]});
+        const gridSize = this.props.gridSize;
+
+        if (this.arrayEquality(gameState.map((element, index) => element[index]))) {
+            this.setState({winLineParams: [0, 0, gridSize, gridSize]});
             this.incrementScore()
             return true
         }
-        if (gameState[2][0] === gameState[1][1] && gameState[2][0]  === gameState[0][2] && gameState[2][0] != null) {
-            this.setState({winLineParams: [3, 0, 0, 3]});
+        if (this.arrayEquality(gameState.map((element, index, array) => element[array.length - index - 1]))) {
+            this.setState({winLineParams: [gridSize, 0, 0, gridSize]});
             this.incrementScore()
             return true
         }
-        for (let i = 0; i < 3; i++) {
-            if (gameState[0][i] === gameState[1][i] && gameState[0][i] === gameState[2][i] && gameState[0][i] != null) {
-                this.setState({winLineParams: [1/2 + i, 0, 1/2 + i, 3]});
+        for (let i = 0; i < gridSize; i++) {
+            if (this.arrayEquality(gameState.map(element => element[i]))) {
+                this.setState({winLineParams: [1/2 + i, 0, 1/2 + i, gridSize]});
                 this.incrementScore()
                 return true
             }
-            if (gameState[i][0] === gameState[i][1] && gameState[i][0] === gameState[i][2] && gameState[i][0] != null) {
-                this.setState({winLineParams: [0, 1/2 + i, 3, 1/2 + i]});
+            if (this.arrayEquality(gameState[i])) {
+                this.setState({winLineParams: [0, 1/2 + i, gridSize, 1/2 + i]});
                 this.incrementScore()
                 return true
             }
@@ -72,6 +68,14 @@ export default class Game extends React.Component {
         }
         return false
     }
+
+    arrayEquality(array) {
+        const first = array[0];
+        if (first === null) {
+            return false;
+        }
+        return array.every(element => {return element === first});
+     }
 
     incrementScore() {
         if (this.state.crossTurn) // X won (called before crossTurn changes again)
@@ -93,10 +97,11 @@ export default class Game extends React.Component {
         const scale = this.state.scale;
         const crossTurn = this.state.crossTurn;
         const gameState = this.state.gameState;
+        const gridSize = this.props.gridSize;
         let element = [];
 
-        for (let i = 0; i < 9; i++) {
-            element[i] = {X: Math.floor(i/3), Y: i % 3};
+        for (let i = 0; i < gridSize * gridSize; i++) {
+            element[i] = {X: Math.floor(i/gridSize), Y: i % gridSize};
         }
 
         return element.map((element, index) => (
@@ -108,16 +113,37 @@ export default class Game extends React.Component {
             isCross = {gameState[element.X] [element.Y]}
             key = {index}
             playerColors = {playerColors}
+            gridSize = {gridSize}
             />
         ));
     }
 
+    drawLines() {
+        const gridSize = this.props.gridSize;
+        const scale = this.state.scale;
+
+        let element = [];
+        for (let i = 1; i < gridSize; i++)
+        {
+            element.push(
+                [0, i * scale, gridSize * scale, i * scale], // horizontal lines
+                [i * scale, 0, i * scale, gridSize * scale] // vertial lines
+            );
+        }
+
+        return element.map((element, index) => (
+            <line x1={element[0]} y1={element[1]} x2={element[2]} y2={element[3]}
+                strokeWidth={scale / 25} stroke="black" key={index}/>
+            ));
+    }
+
     newGame() {
+        const gridSize = this.props.gridSize;
         this.setState({
             playing: true,
             draw: false,
             crossTurn: this.props.player1starts,
-            gameState: [[null, null, null], [null, null, null], [null, null, null]],
+            gameState: Array.from({length: gridSize}, row => Array(gridSize).fill(null)),
             winLineParams: [null, null, null, null],
         });
 
@@ -125,6 +151,7 @@ export default class Game extends React.Component {
 
     render () {
         const playerNames = this.props.playerNames;
+        const gridSize = this.props.gridSize;
 
         const scale = this.state.scale; // Size of each space
         const winLineParams = this.state.winLineParams; // For line though winning set
@@ -164,13 +191,13 @@ export default class Game extends React.Component {
                     </tr>
                 </tbody></table><br/>
 
-                <svg width={3 * scale} height={3 * scale}>
-                    {this.drawLine([0, scale, 3 * scale, scale])}
-                    {this.drawLine([0, 2 * scale, 3 * scale, 2 * scale])}
-                    {this.drawLine([scale, 0, scale, 3 * scale])}
-                    {this.drawLine([2 * scale, 0, 2 * scale, 3 * scale])}
+                <svg width={gridSize * scale} height={gridSize * scale}>
+                    {this.drawLines()}
                     {this.drawSymbols(this.props.playerColors)}
-                    {this.drawLine(scaledWinLineParams)}
+                    <line x1={scaledWinLineParams[0]} y1={scaledWinLineParams[1]}
+                    x2={scaledWinLineParams[2]} y2={scaledWinLineParams[3]}
+                    strokeWidth={scale / 25}
+                    stroke="black"/>
                 </svg>
 
                 <br />

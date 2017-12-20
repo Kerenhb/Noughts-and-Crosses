@@ -1,2 +1,3 @@
 - Cell width for the player names ignores the width of the lines
 - Form boxes aren't lined up nicely
+- text position and size should be relative to size of the whole grid, not a single box

@@ -68,8 +68,11 @@ export default class App extends React.Component {
             errorString += "Player colors cannot be indentical\n";
         }
 
-        if (this.state.gridSize <= 0) {
-            errorString += "Need to have a positive grid size\n";
+        if (this.state.gridSize <= 1) {
+            errorString += "Grid size needs to be at least 2\n";
+        }
+        if (this.state.gridSize > 20) {
+            errorString += "Grid size needs to smaller than 20\n";
         }
 
         if (errorString.length == 0) {
@@ -96,7 +99,7 @@ export default class App extends React.Component {
                 playerNames = {this.state.playerNames}
                 player1starts = {this.state.player1starts}
                 playerColors = {this.state.playerColors}
-                gridSize = {this.state.gridSize}
+                gridSize = {Number(this.state.gridSize)}
             />
         )
     };
