@@ -15,6 +15,7 @@ export default class App extends React.Component {
 
         this.updateName = this.updateName.bind(this);
         this.updateColor = this.updateColor.bind(this);
+        this.updateWhoStarts = this.updateWhoStarts.bind(this);
     }
 
     updateName(event, playerNumber){
@@ -29,6 +30,10 @@ export default class App extends React.Component {
         this.setState({playerColors});
     }
 
+    updateWhoStarts(playerNumber) {
+        this.setState({player1Cross: !playerNumber}) // 0 = player 1, 1 = player 2
+    }
+
     render() {
         return (
             <Form
@@ -36,6 +41,8 @@ export default class App extends React.Component {
                 updateName = {this.updateName}
                 playerColors = {this.state.playerColors}
                 updateColor = {this.updateColor}
+                whoStarts = {this.state.player1Cross}
+                updateWhoStarts = {this.updateWhoStarts}
             />
         )
     };
