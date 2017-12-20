@@ -15,8 +15,8 @@ export default class Game extends React.Component {
             draw: false,
             gameState: [[null, null, null], [null, null, null], [null, null, null]],
             winLineParams: [null, null, null, null],
-            xScore: 0,
-            oScore: 0,
+            p1Score: 0,
+            p2Score: 0,
         };
     }
 
@@ -76,11 +76,11 @@ export default class Game extends React.Component {
     incrementScore() {
         if (this.state.crossTurn) // X won (called before crossTurn changes again)
         {
-            this.setState({xScore: this.state.xScore += 1});
+            this.setState({p1Score: this.state.p1Score += 1});
         }
         else // o won
         {
-            this.setState({oScore: this.state.oScore += 1});
+            this.setState({p2Score: this.state.p2Score += 1});
         }
     }
 
@@ -123,6 +123,8 @@ export default class Game extends React.Component {
     }
 
     render () {
+        const playerNames = this.props.playerNames;
+
         const scale = this.state.scale; // Size of each space
         const winLineParams = this.state.winLineParams; // For line though winning set
         const crossTurn = this.state.crossTurn;
@@ -137,29 +139,27 @@ export default class Game extends React.Component {
             <div>
                 <table style={{fontSize: `${fontSize}px`}} padding="0"><tbody>
                     <tr>
-                        <td width={scale} align="center" >Player 1 (<span style={{"color":"red"}}>x</span>)</td>
+                        <td width={scale} align="center">{playerNames[0]} (<span style={{"color":"red"}}>x</span>)</td>
                         <td width={scale}></td>
-                        <td width={scale} align="center">Player 2 (<span style={{"color":"blue"}}>o</span>)</td>
+                        <td width={scale} align="center">{playerNames[1]} (<span style={{"color":"blue"}}>o</span>)</td>
                     </tr>
                     <tr>
                         <td width={scale}></td>
                             {this.state.playing ?
                                 <td width={scale} align="center">{crossTurn ? // Whoose turn is it?
-                                    <span style={{"color":"red"}}>x</span> : <span style={{"color":"blue"}}>o</span>}
-                                's' turn</td>
+                                    playerNames[0] : playerNames[1]}'s turn</td>
                                 : (this.state.draw ? // Is it a draw?
                                     <td width={scale} align="center" style={{fontWeight:"bold"}}>It's a draw</td>
                                     :
                                     <td width={scale} align="center" style={{fontWeight:"bold"}}>{!crossTurn ? // Who won?
-                                    <span style={{"color":"red"}}>x</span> : <span style={{"color":"blue"}}>o</span>}
-                                    &nbsp;won!</td>
+                                        playerNames[0] : playerNames[1]}&nbsp;won!</td>
                                 )}
 
                     </tr>
                     <tr>
-                        <td width={scale} align="center">{this.state.xScore}</td>
+                        <td width={scale} align="center">{this.state.p1Score}</td>
                         <td width={scale}></td>
-                        <td width={scale} align="center">{this.state.oScore}</td>
+                        <td width={scale} align="center">{this.state.p2Score}</td>
                     </tr>
                 </tbody></table><br/>
 

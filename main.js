@@ -51,7 +51,9 @@ export default class App extends React.Component {
                 updateWhoStarts = {this.updateWhoStarts}
                 onSumbit = {this.onSumbit}
             />
-            : <Game />
+            : <Game
+                playerNames = {this.state.playerNames}
+            />
         )
     };
 }
