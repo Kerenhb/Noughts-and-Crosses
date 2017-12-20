@@ -54,6 +54,7 @@ export default class App extends React.Component {
             : <Game
                 playerNames = {this.state.playerNames}
                 player1starts = {this.state.player1starts}
+                playerColors = {this.state.playerColors}
             />
         )
     };

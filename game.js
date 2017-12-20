@@ -89,7 +89,7 @@ export default class Game extends React.Component {
         this.setState({scale: scale});
     }
 
-    drawSymbols() { // Dynamically create all the symbols
+    drawSymbols(playerColors) { // Dynamically create all the symbols
         const scale = this.state.scale;
         const crossTurn = this.state.crossTurn;
         const gameState = this.state.gameState;
@@ -107,6 +107,7 @@ export default class Game extends React.Component {
             crossTurn = {crossTurn}
             isCross = {gameState[element.X] [element.Y]}
             key = {index}
+            playerColors = {playerColors}
             />
         ));
     }
@@ -139,9 +140,9 @@ export default class Game extends React.Component {
             <div>
                 <table style={{fontSize: `${fontSize}px`}} padding="0"><tbody>
                     <tr>
-                        <td width={scale} align="center">{playerNames[0]} (<span style={{"color":"red"}}>x</span>)</td>
+                        <td width={scale} align="center">{playerNames[0]} (<span style={{"color":this.props.playerColors[0]}}>x</span>)</td>
                         <td width={scale}></td>
-                        <td width={scale} align="center">{playerNames[1]} (<span style={{"color":"blue"}}>o</span>)</td>
+                        <td width={scale} align="center">{playerNames[1]} (<span style={{"color":this.props.playerColors[1]}}>o</span>)</td>
                     </tr>
                     <tr>
                         <td width={scale}></td>
@@ -168,7 +169,7 @@ export default class Game extends React.Component {
                     {this.drawLine([0, 2 * scale, 3 * scale, 2 * scale])}
                     {this.drawLine([scale, 0, scale, 3 * scale])}
                     {this.drawLine([2 * scale, 0, 2 * scale, 3 * scale])}
-                    {this.drawSymbols()}
+                    {this.drawSymbols(this.props.playerColors)}
                     {this.drawLine(scaledWinLineParams)}
                 </svg>
 

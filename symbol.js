@@ -14,13 +14,13 @@ export default class Symbol extends React.Component {
                     y1={position[1] + padding}
                     x2={position[0] + boxSize - padding}
                     y2={position[1] + boxSize - padding}
-                    strokeWidth={strokeSize} stroke="red"/>
+                    strokeWidth={strokeSize} stroke={this.props.playerColors[0]}/>
 
                     <line x1={position[0] + boxSize - padding}
                     y1={position[1] + padding}
                     x2={position[0] + padding}
                     y2={position[1] + boxSize - padding}
-                    strokeWidth={strokeSize} stroke="red"/>
+                    strokeWidth={strokeSize} stroke={this.props.playerColors[0]}/>
                 </svg>
             );
         };
@@ -31,7 +31,7 @@ export default class Symbol extends React.Component {
                     <circle cx={position[0] + boxSize/2}
                     cy={position[1] + boxSize/2}
                     r={boxSize/2 - padding}
-                    strokeWidth={strokeSize} stroke="blue" fillOpacity="0"/>
+                    strokeWidth={strokeSize} stroke={this.props.playerColors[1]} fillOpacity="0"/>
                 </svg>
             );
         };
