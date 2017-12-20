@@ -9,7 +9,7 @@ export default class App extends React.Component {
 
         this.state = {
             playerNames: ['Player 1', 'Player 2'],
-            playerColors: ['red', 'blue'],
+            playerColors: ['#ff0000', '#0000ff'],
             player1Cross: true, // Player 1 is X and therefore starts
         };
 
@@ -27,13 +27,14 @@ export default class App extends React.Component {
         let playerColors = this.state.playerColors;
         playerColors[playerNumber] = event.target.value;
         this.setState({playerColors});
-        console.log(playerColors)
     }
 
     render() {
         return (
             <Form
+                playerNames = {this.state.playerNames}
                 updateName = {this.updateName}
+                playerColors = {this.state.playerColors}
                 updateColor = {this.updateColor}
             />
         )
