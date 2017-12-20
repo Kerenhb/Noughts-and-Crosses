@@ -24,6 +24,10 @@ export default class Form extends React.Component {
                 Starts first: <input type = 'radio' name = "start" checked = {!this.props.player1starts}
                 onChange = {event => {this.props.updateWhoStarts(1)}}/>
 
+                <h3>Game Settings</h3>
+                Grid size: <input type="number" value = {this.props.gridSize}
+                onChange = {event => {this.props.updateGridSize(event)}} />
+
                 <br /><br />
                 <button onClick = {this.props.onSumbit}>Sumbit</button>
             </div>

@@ -11,12 +11,14 @@ export default class App extends React.Component {
             playerNames: ['Player 1', 'Player 2'],
             playerColors: ['#ff0000', '#0000ff'],
             player1starts: true,
+            gridSize: 3, // n * n grid
             showForm: true, // Display the form rather than the game
         };
 
         this.updateName = this.updateName.bind(this);
         this.updateColor = this.updateColor.bind(this);
         this.updateWhoStarts = this.updateWhoStarts.bind(this);
+        this.updateGridSize = this.updateGridSize.bind(this);
         this.onSumbit = this.onSumbit.bind(this);
     }
 
@@ -34,6 +36,10 @@ export default class App extends React.Component {
 
     updateWhoStarts(playerNumber) {
         this.setState({player1starts: !playerNumber}) // 0 = player 1, 1 = player 2
+    }
+
+    updateGridSize(event) {
+        this.setState({gridSize: event.target.value})
     }
 
     onSumbit() {
@@ -62,6 +68,10 @@ export default class App extends React.Component {
             errorString += "Player colors cannot be indentical\n";
         }
 
+        if (this.state.gridSize <= 0) {
+            errorString += "Need to have a positive grid size\n";
+        }
+
         if (errorString.length == 0) {
             this.setState({showForm: false}); // switch to game
         } else {
@@ -78,12 +88,15 @@ export default class App extends React.Component {
                 updateColor = {this.updateColor}
                 player1starts = {this.state.player1starts}
                 updateWhoStarts = {this.updateWhoStarts}
+                updateGridSize = {this.updateGridSize}
+                gridSize = {this.state.gridSize}
                 onSumbit = {this.onSumbit}
             />
             : <Game
                 playerNames = {this.state.playerNames}
                 player1starts = {this.state.player1starts}
                 playerColors = {this.state.playerColors}
+                gridSize = {this.state.gridSize}
             />
         )
     };
