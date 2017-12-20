@@ -51,7 +51,14 @@ export default class App extends React.Component {
         if (playerNames[0].length != 0 && (playerNames[1].length != 0) && playerNames[0] == playerNames[1]){
             errorString += "Player names cannot be indentical\n";
         }
-        if (playerColors[0] === playerColors[1]){
+
+        if (playerColors[0] == "#ffffff") {
+            errorString += "Can not choose white as a color for player 2\n";
+        }
+        if (playerColors[1] == "#ffffff") {
+            errorString += "Can not choose white as a color for player 2\n";
+        }
+        if (playerColors[0] != "#ffffff" && (playerColors[1] != "#ffffff") && playerColors[0] == playerColors[1]){
             errorString += "Player colors cannot be indentical\n";
         }
 
