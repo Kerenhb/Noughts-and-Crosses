@@ -4,15 +4,13 @@ export default class Form extends React.Component {
     render() {
         return(
             <div>
+                <h2>Game Settings</h2>
                 <h3>Player 1</h3>
                 Name: <input type="text" value = {this.props.playerNames[0]}
                 onChange = {event => {this.props.updateName(event, 0)}}/>
                 <br />
                 Color: <input type="color" value = {this.props.playerColors[0]}
                 onChange = {event => {this.props.updateColor(event, 0)}}/>
-                <br />
-                Starts first: <input type = 'radio' name = "start" checked = {this.props.player1starts}
-                onChange = {event => {this.props.updateWhoStarts(0)}}/>
 
                 <h3>Player 2</h3>
                 Name: <input type="text" value = {this.props.playerNames[1]}
@@ -20,13 +18,16 @@ export default class Form extends React.Component {
                 <br />
                 Color: <input type="color" value = {this.props.playerColors[1]}
                 onChange = {event => {this.props.updateColor(event, 1)}}/>
-                <br />
-                Starts first: <input type = 'radio' name = "start" checked = {!this.props.player1starts}
-                onChange = {event => {this.props.updateWhoStarts(1)}}/>
 
-                <h3>Game Settings</h3>
+                <h3>Misc Settings</h3>
                 Grid size: <input type="number" value = {this.props.gridSize}
                 onChange = {event => {this.props.updateGridSize(event)}} />
+
+                <h4>Who starts?</h4>
+                Player 1: <input type = 'radio' name = "start" checked = {this.props.player1starts}
+                onChange = {event => {this.props.updateWhoStarts(0)}}/>&nbsp;&nbsp;
+                Player 2: <input type = 'radio' name = "start" checked = {!this.props.player1starts}
+                onChange = {event => {this.props.updateWhoStarts(1)}}/>
 
                 <br /><br />
                 <button onClick = {this.props.onSumbit}>Sumbit</button>
