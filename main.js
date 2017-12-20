@@ -180,6 +180,16 @@ class Game extends React.Component {
         ));
     }
 
+    newGame() {
+        this.setState({
+            playing: true,
+            crossTurn: true,
+            gameState: [[null, null, null], [null, null, null], [null, null, null]],
+            winLineParams: [null, null, null, null],
+        });
+
+    }
+
     render () {
         const scale = this.state.scale; // Size of each space
         const winLineParams = this.state.winLineParams; // For line though winning set
@@ -232,6 +242,15 @@ class Game extends React.Component {
                     Eventhandler = {this.sliderHandler}
                     scale = {scale}
                 ></Slider>
+                <span style={{"paddingLeft":`${scale}px`}}>
+                    {this.state.playing ?
+                        <button style={{fontSize: `${fontSize}px`}} type="reset"
+                        onClick={() => {location.reload()}}>Reset Everything</button>
+                        :
+                        <button style={{fontSize: `${fontSize}px`}}
+                        onClick={() => {this.newGame()}}>New Game</button>
+                    }
+                </span>
             </div>
         );
     }
