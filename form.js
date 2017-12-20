@@ -5,10 +5,12 @@ export default class Form extends React.Component {
         return(
             <div>
                 <h3>Player 1</h3>
-                Name: <input type="text" onChange = {event => {this.props.updateName(event, 0)}}/>
+                Name: <input type="text" onChange = {event => {this.props.updateName(event, 0)}}/><br />
+                Color: <input type="color" onChange = {event => {this.props.updateColor(event, 0)}}/>
 
                 <h3>Player 2</h3>
-                Name: <input type="text" onChange = {event => {this.props.updateName(event, 1)}}/>
+                Name: <input type="text" onChange = {event => {this.props.updateName(event, 1)}}/><br />
+                Color: <input type="color" onChange = {event => {this.props.updateColor(event, 1)}}/>
             </div>
         )
     }

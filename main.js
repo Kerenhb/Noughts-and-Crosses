@@ -14,6 +14,7 @@ export default class App extends React.Component {
         };
 
         this.updateName = this.updateName.bind(this);
+        this.updateColor = this.updateColor.bind(this);
     }
 
     updateName(event, playerNumber){
@@ -22,10 +23,18 @@ export default class App extends React.Component {
         this.setState({playerNames});
     }
 
+    updateColor(event, playerNumber){
+        let playerColors = this.state.playerColors;
+        playerColors[playerNumber] = event.target.value;
+        this.setState({playerColors});
+        console.log(playerColors)
+    }
+
     render() {
         return (
             <Form
                 updateName = {this.updateName}
+                updateColor = {this.updateColor}
             />
         )
     };
