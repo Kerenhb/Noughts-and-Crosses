@@ -37,7 +37,29 @@ export default class App extends React.Component {
     }
 
     onSumbit() {
-        this.setState({showForm: false})
+        const playerNames = this.state.playerNames;
+        const playerColors = this.state.playerColors;
+        let errorString = "";
+
+        // Validation
+        if (playerNames[0].length == 0) {
+            errorString += "No player name entered for player 1\n";
+        }
+        if (playerNames[1].length == 0) {
+            errorString += "No player name entered for player 2\n";
+        }
+        if (playerNames[0].length != 0 && (playerNames[1].length != 0) && playerNames[0] == playerNames[1]){
+            errorString += "Player names cannot be indentical\n";
+        }
+        if (playerColors[0] === playerColors[1]){
+            errorString += "Player colors cannot be indentical\n";
+        }
+
+        if (errorString.length == 0) {
+            this.setState({showForm: false}); // switch to game
+        } else {
+            alert(errorString);
+        }
     }
 
     render() {
