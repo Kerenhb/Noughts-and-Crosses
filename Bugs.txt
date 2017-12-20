@@ -1,1 +1,2 @@
 - Cell width for the player names ignores the width of the lines
+- Form boxes aren't lined up nicely
