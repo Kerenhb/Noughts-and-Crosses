@@ -11,11 +11,13 @@ export default class App extends React.Component {
             playerNames: ['Player 1', 'Player 2'],
             playerColors: ['#ff0000', '#0000ff'],
             player1Cross: true, // Player 1 is X and therefore starts
+            showForm: true, // Display the form rather than the game
         };
 
         this.updateName = this.updateName.bind(this);
         this.updateColor = this.updateColor.bind(this);
         this.updateWhoStarts = this.updateWhoStarts.bind(this);
+        this.onSumbit = this.onSumbit.bind(this);
     }
 
     updateName(event, playerNumber){
@@ -34,8 +36,12 @@ export default class App extends React.Component {
         this.setState({player1Cross: !playerNumber}) // 0 = player 1, 1 = player 2
     }
 
+    onSumbit() {
+        this.setState({showForm: false})
+    }
+
     render() {
-        return (
+        return (this.state.showForm ?
             <Form
                 playerNames = {this.state.playerNames}
                 updateName = {this.updateName}
@@ -43,7 +49,9 @@ export default class App extends React.Component {
                 updateColor = {this.updateColor}
                 whoStarts = {this.state.player1Cross}
                 updateWhoStarts = {this.updateWhoStarts}
+                onSumbit = {this.onSumbit}
             />
+            : <Game />
         )
     };
 }

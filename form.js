@@ -23,6 +23,9 @@ export default class Form extends React.Component {
                 <br />
                 Starts first: <input type = 'radio' name = "start" checked = {!this.props.whoStarts}
                 onChange = {event => {this.props.updateWhoStarts(1)}}/>
+
+                <br /><br />
+                <button onClick = {this.props.onSumbit}>Sumbit</button>
             </div>
         )
     }
