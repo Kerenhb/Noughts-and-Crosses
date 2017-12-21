@@ -97,6 +97,9 @@ export default class App extends React.Component {
         if (this.state.numberOfGames <= 0) {
             errorString += "Need to play at least one game\n";
         }
+        if (!Number.isInteger(Number(this.state.numberOfGames))) {
+            errorString += "Need to have an interger number of games\n";
+        }
 
         if (errorString.length == 0) {
             this.setState({showForm: false}); // switch to game
