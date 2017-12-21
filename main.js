@@ -15,6 +15,9 @@ export default class App extends React.Component {
             gridSize: 3, // n * n grid
             numberOfGames: 1, // number of games to play
             showForm: true, // Display the form rather than the game
+            matchOver: false, // true when all the games have been played
+            p1Score: 0,
+            p2Score: 0,
         };
 
         this.updateName = this.updateName.bind(this);
@@ -24,6 +27,7 @@ export default class App extends React.Component {
         this.updateNumberOfGames = this.updateNumberOfGames.bind(this);
         this.toggleOn = this.toggleOn.bind(this);
         this.onSumbit = this.onSumbit.bind(this);
+        this.matchOver = this.matchOver.bind(this);
     }
 
     updateName(event, playerNumber){
@@ -98,33 +102,84 @@ export default class App extends React.Component {
         }
     }
 
+    matchOver(p1Score, p2Score) {
+        this.setState({
+            matchOver: true,
+            p1Score: p1Score,
+            p2Score: p2Score,
+        });
+    }
+
+    drawEndScreen() {
+        const playerNames = this.state.playerNames;
+        const p1Score = this.state.p1Score;
+        const p2Score = this.state.p2Score;
+
+        return (
+            <div>
+                <table style={{fontSize: "20px"}} padding="0">
+                    <thead><tr>
+                        <th width="250px"></th>
+                        <th width="250px" align="center" style={{fontWeight: "strong"}}>GAME OVER</th>
+                        <th width="250px"></th>
+                    </tr></thead>
+                    <tbody>
+                        <tr>
+                            <td width="250px" align="center">{playerNames[0]}'s final score is: {p1Score}</td>
+                            <td width="250px"></td>
+                            <td width="250px" align="center">{playerNames[1]}'s final score is: {p2Score}</td>
+                        </tr>
+                        <tr>
+                            <td width="250px"></td>
+                            <td width="250px" align="center">
+                                {p1Score == p2Score ? "It's a draw!" :
+                                    ((p1Score > p2Score ? playerNames[0] : playerNames[1]) + " won!")}
+                                </td>
+                            <td width="250px"></td>
+                        </tr>
+                        <tr><td><br /></td></tr>
+                        <tr>
+                            <td width="250px"></td>
+                            <td width="250px" align="center">
+                                <button onClick={() => {location.reload()}}>Reset Everything</button>
+                                </td>
+                            <td width="250px"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+         );
+    }
+
     render() {
-        return (this.state.showForm ?
-            <Form
-                playerNames = {this.state.playerNames}
-                updateName = {this.updateName}
-                playerColors = {this.state.playerColors}
-                updateColor = {this.updateColor}
-                player1starts = {this.state.player1starts}
-                updateWhoStarts = {this.updateWhoStarts}
-                updateGridSize = {this.updateGridSize}
-                gridSize = {this.state.gridSize}
-                updateNumberOfGames = {this.updateNumberOfGames}
-                numberOfGames = {this.state.numberOfGames}
-                startToggle = {this.state.startToggle}
-                toggleOn = {this.toggleOn}
-                onSumbit = {this.onSumbit}
-            />
-            : <Game
-                playerNames = {this.state.playerNames}
-                player1starts = {this.state.player1starts}
-                playerColors = {this.state.playerColors}
-                gridSize = {Number(this.state.gridSize)}
-                numberOfGames = {Number(this.state.numberOfGames)}
-                startToggle = {this.state.startToggle}
-            />
-        )
-    };
+        return (!this.state.matchOver ?
+                    this.state.showForm ?
+                        <Form
+                            playerNames = {this.state.playerNames}
+                            updateName = {this.updateName}
+                            playerColors = {this.state.playerColors}
+                            updateColor = {this.updateColor}
+                            player1starts = {this.state.player1starts}
+                            updateWhoStarts = {this.updateWhoStarts}
+                            updateGridSize = {this.updateGridSize}
+                            gridSize = {this.state.gridSize}
+                            updateNumberOfGames = {this.updateNumberOfGames}
+                            numberOfGames = {this.state.numberOfGames}
+                            startToggle = {this.state.startToggle}
+                            toggleOn = {this.toggleOn}
+                            onSumbit = {this.onSumbit}
+                        />
+                        : <Game
+                            playerNames = {this.state.playerNames}
+                            player1starts = {this.state.player1starts}
+                            playerColors = {this.state.playerColors}
+                            gridSize = {Number(this.state.gridSize)}
+                            numberOfGames = {Number(this.state.numberOfGames)}
+                            startToggle = {this.state.startToggle}
+                            matchOver = {this.matchOver}
+                        />
+                    : this.drawEndScreen()
+        )};
 }
 
 const element = <App />;

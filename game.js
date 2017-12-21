@@ -141,15 +141,20 @@ export default class Game extends React.Component {
     newGame() {
         const gridSize = this.props.gridSize;
         const numberOfGamesPlayed = this.state.numberOfGamesPlayed + 1;
-        this.setState({
-            playing: true,
-            draw: false,
-            crossTurn: (this.props.startToggle) ? this.whoStarts() : this.props.player1starts,
-            gameState: Array.from({length: gridSize}, row => Array(gridSize).fill(null)),
-            winLineParams: [null, null, null, null],
-            numberOfGamesPlayed: numberOfGamesPlayed,
-        });
+        const numberOfGamesToPlay = this.props.numberOfGames;
 
+        if (numberOfGamesPlayed >= numberOfGamesToPlay) {// Time to stop
+            this.props.matchOver(this.state.p1Score, this.state.p2Score);
+        } else {
+            this.setState({
+                playing: true,
+                draw: false,
+                crossTurn: (this.props.startToggle) ? this.whoStarts() : this.props.player1starts,
+                gameState: Array.from({length: gridSize}, row => Array(gridSize).fill(null)),
+                winLineParams: [null, null, null, null],
+                numberOfGamesPlayed: numberOfGamesPlayed,
+            });
+        }
     }
 
     whoStarts() { // toggle is on
