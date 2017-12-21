@@ -168,7 +168,7 @@ export default class Game extends React.Component {
         const scale = this.state.scale; // Size of each space
         const winLineParams = this.state.winLineParams; // For line though winning set
         const crossTurn = this.state.crossTurn;
-        const fontSize = Math.max(scale / 10, 10); // Ensures readable text
+        const fontSize = Math.max((gridSize * scale) / 30, 10); // Ensures readable text
         let scaledWinLineParams = [];
 
         for (let i = 0; i < winLineParams.length; i++) {
@@ -179,27 +179,27 @@ export default class Game extends React.Component {
             <div>
                 <table style={{fontSize: `${fontSize}px`}} padding="0"><tbody>
                     <tr>
-                        <td width={scale} align="center">{playerNames[0]} (<span style={{"color":this.props.playerColors[0]}}>x</span>)</td>
-                        <td width={scale}></td>
-                        <td width={scale} align="center">{playerNames[1]} (<span style={{"color":this.props.playerColors[1]}}>o</span>)</td>
+                        <td width={(gridSize * scale) / 3} align="center">{playerNames[0]} (<span style={{"color":this.props.playerColors[0]}}>x</span>)</td>
+                        <td width={(gridSize * scale) / 3}></td>
+                        <td width={(gridSize * scale) / 3} align="center">{playerNames[1]} (<span style={{"color":this.props.playerColors[1]}}>o</span>)</td>
                     </tr>
                     <tr>
-                        <td width={scale}></td>
+                        <td width={(gridSize * scale) / 3}></td>
                             {this.state.playing ?
-                                <td width={scale} align="center">{crossTurn ? // Whoose turn is it?
+                                <td width={(gridSize * scale) / 3} align="center">{crossTurn ? // Whoose turn is it?
                                     playerNames[0] : playerNames[1]}'s turn</td>
                                 : (this.state.draw ? // Is it a draw?
-                                    <td width={scale} align="center" style={{fontWeight:"bold"}}>It's a draw</td>
+                                    <td width={(gridSize * scale) / 3} align="center" style={{fontWeight:"bold"}}>It's a draw</td>
                                     :
-                                    <td width={scale} align="center" style={{fontWeight:"bold"}}>{!crossTurn ? // Who won?
+                                    <td width={(gridSize * scale) / 3} align="center" style={{fontWeight:"bold"}}>{!crossTurn ? // Who won?
                                         playerNames[0] : playerNames[1]}&nbsp;won!</td>
                                 )}
 
                     </tr>
                     <tr>
-                        <td width={scale} align="center">{this.state.p1Score}</td>
-                        <td width={scale}></td>
-                        <td width={scale} align="center">{this.state.p2Score}</td>
+                        <td width={(gridSize * scale) / 3} align="center">{this.state.p1Score}</td>
+                        <td width={(gridSize * scale) / 3}></td>
+                        <td width={(gridSize * scale) / 3} align="center">{this.state.p2Score}</td>
                     </tr>
                 </tbody></table><br/>
 
@@ -217,7 +217,7 @@ export default class Game extends React.Component {
                     Eventhandler = {this.sliderHandler}
                     scale = {scale}
                 ></Slider>
-                <span style={{"paddingLeft":`${scale}px`}}>
+                <span style={{"paddingLeft":`${(gridSize * scale) / 3}px`}}>
                     {this.state.playing ?
                         <button style={{fontSize: `${fontSize}px`}} type="reset"
                         onClick={() => {location.reload()}}>Reset Everything</button>

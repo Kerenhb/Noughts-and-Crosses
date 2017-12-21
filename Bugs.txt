@@ -1,2 +1,1 @@
 - Cell width for the player names ignores the width of the lines
-- text position and size should be relative to size of the whole grid, not a single box
