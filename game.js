@@ -11,7 +11,7 @@ export default class Game extends React.Component {
         const gridSize = this.props.gridSize;
         this.state = {
             crossTurn: this.props.player1starts, // Who goes first
-            scale: 200, // Overall relative scale (100 is normal)
+            scale: 100, // Overall relative scale (100 is normal)
             playing: true, // has the game ended?
             draw: false,
             gameState: Array.from({length: gridSize}, row => Array(gridSize).fill(null)),
@@ -213,7 +213,7 @@ export default class Game extends React.Component {
                 </svg>
 
                 <br />
-                <Slider
+                Scale: <Slider
                     Eventhandler = {this.sliderHandler}
                     scale = {scale}
                 ></Slider>
