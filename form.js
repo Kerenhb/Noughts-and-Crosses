@@ -5,14 +5,14 @@ export default class Form extends React.Component {
         return(
             <div>
                 <h2>Game Settings</h2>
-                <h3>Player 1</h3>
+                <h3>Player 1 (<span style={{"color":this.props.playerColors[0]}}>x</span>)</h3>
                 Name: <input type="text" value = {this.props.playerNames[0]}
                 onChange = {event => {this.props.updateName(event, 0)}}/>
                 <br />
                 Color: <input type="color" value = {this.props.playerColors[0]}
                 onChange = {event => {this.props.updateColor(event, 0)}}/>
 
-                <h3>Player 2</h3>
+                <h3>Player 2 (<span style={{"color":this.props.playerColors[1]}}>o</span>)</h3>
                 Name: <input type="text" value = {this.props.playerNames[1]}
                 onChange = {event => {this.props.updateName(event, 1)}}/>
                 <br />
