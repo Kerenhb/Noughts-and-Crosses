@@ -90,6 +90,9 @@ export default class App extends React.Component {
         if (this.state.gridSize > 20) {
             errorString += "Grid size needs to smaller than 20\n";
         }
+        if (!Number.isInteger(Number(this.state.gridSize))) {
+            errorString += "Need to have an interger grid size\n";
+        }
 
         if (this.state.numberOfGames <= 0) {
             errorString += "Need to play at least one game\n";
