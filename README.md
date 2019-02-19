@@ -2,7 +2,7 @@
 I made this version of noughts and crosses from scratch in order to give me a better focus to learn React.js and to help cement my knowledge of javascript. It also helped me to become more familiar with git and the git workflow, by working with a decent sized project of a few hundred lines over a few days.
 
 ## Setting up the system
-The app is compiled by babel using webpack and all the dependancies should be included, although you may need to call `npm install`. Although I have created it on a mac and only tested it with google chrome version 62, so can not vouch that it will work on different systems.
+The app is compiled by babel using webpack and all the dependencies should be included, although you may need to call `npm install`. Although I have created it on a mac and only tested it with google chrome version 62, so can not vouch that it will work on different systems.
 
 In order to run webpack and build the code you need to run:
 ```
@@ -32,7 +32,7 @@ The actual game should hopefully be self-explanatory, assuming that you can actu
 
 Under the grid is a slider which lets you change the size of the grid and the text, and a button (`Reset Everything`) that resets the application, bringing you back to the main start-up screen.
 
-## Acknowledgments
+## Acknowledgements
 [Iqbal Ahmed (propattern)](https://github.com/propattern) helped me with useful advice when I got stuck.
 I learnt JavaScript by using the following resources: 
 * [MDN Web Docs](https://developer.mozilla.org/en-US/)

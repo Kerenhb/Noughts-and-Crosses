@@ -8,54 +8,57 @@ export default class Game extends React.Component {
         this.handleNullClick = this.handleNullClick.bind(this);
         this.sliderHandler = this.sliderHandler.bind(this);
 
-        const gridSize = this.props.gridSize;
+        const { gridSize, player1starts } = this.props;
         this.state = {
-            crossTurn: this.props.player1starts, // Who goes first
-            scale: 100, // Overall relative scale (100 is normal)
-            playing: true, // has the game ended?
-            draw: false,
-            gameState: Array.from({length: gridSize}, row => Array(gridSize).fill(null)),
-            winLineParams: [null, null, null, null],
-            p1Score: 0,
-            p2Score: 0,
-            numberOfGamesPlayed: 0, // can't just add scores due to draws
+            crossTurn : player1starts, // Who goes first
+            scale : 100, // Overall relative scale (100 is normal)
+            playing : true, // has the game ended?
+            draw : false,
+            gameState : Array.from({ length: gridSize }, row => Array(gridSize).fill(null)), // Makes a 2D array of length gridSize
+            winLineParams : [null, null, null, null],
+            p1Score : 0,
+            p2Score : 0,
+            numberOfGamesPlayed : 0, // can't just add scores due to draws
         };
     }
 
     handleNullClick(x, y) {
-        const crossTurn = this.state.crossTurn;
-        const gameState = this.state.gameState;
-
-        if (this.state.playing) {
-            gameState[y][x] = crossTurn;
+        const { crossTurn, gameState, playing } = this.state;
+        if (playing) {
+            gameState[y][x] = crossTurn; // true === x
             this.setState({
                 crossTurn: !crossTurn, // Change turn
-                gameState: gameState, // update symbol
+                gameState, // update board
                 playing: !this.hasWon(),
             });
         }
     };
 
     hasWon() {
-        const gameState = this.state.gameState;
-        const gridSize = this.props.gridSize;
+        const { gameState } = this.state;
+        const { gridSize } = this.props;
 
+        // Diagonal line: Top left to bottom right
         if (this.arrayEquality(gameState.map((element, index) => element[index]))) {
             this.setState({winLineParams: [0, 0, gridSize, gridSize]});
             this.incrementScore()
             return true
         }
+
+        // Diagonal line: Top right to bottom left
         if (this.arrayEquality(gameState.map((element, index, array) => element[array.length - index - 1]))) {
             this.setState({winLineParams: [gridSize, 0, 0, gridSize]});
             this.incrementScore()
             return true
         }
         for (let i = 0; i < gridSize; i++) {
+            // Vertical line
             if (this.arrayEquality(gameState.map(element => element[i]))) {
                 this.setState({winLineParams: [1/2 + i, 0, 1/2 + i, gridSize]});
                 this.incrementScore()
                 return true
             }
+            // Horizontal line
             if (this.arrayEquality(gameState[i])) {
                 this.setState({winLineParams: [0, 1/2 + i, gridSize, 1/2 + i]});
                 this.incrementScore()
@@ -63,8 +66,8 @@ export default class Game extends React.Component {
             }
         }
         if (gameState.every((row) => row.every((elm) => elm !== null))) {
-            // check that board is completly full, aka draw - therefore no score update
-            this.setState({draw: true});
+            // check that board is completely full, aka draw - therefore no score update
+            this.setState({ draw: true });
             return true;
         }
         return false
@@ -79,95 +82,92 @@ export default class Game extends React.Component {
      }
 
     incrementScore() {
-        if (this.state.crossTurn) // X won (called before crossTurn changes again)
+        const { crossTurn, p1Score, p2Score } = this.state; 
+        if (crossTurn) // X won (called before crossTurn changes again)
         {
-            this.setState({p1Score: this.state.p1Score += 1});
+            this.setState({p1Score: p1Score += 1});
         }
-        else // o won
+        else // O won
         {
-            this.setState({p2Score: this.state.p2Score += 1});
+            this.setState({p2Score: p2Score += 1});
         }
     }
 
     sliderHandler(event) {
         const scale = Number(event.target.value);
-        this.setState({scale: scale});
+        this.setState({ scale });
     }
 
     drawSymbols(playerColors) { // Dynamically create all the symbols
-        const scale = this.state.scale;
-        const crossTurn = this.state.crossTurn;
-        const gameState = this.state.gameState;
-        const gridSize = this.props.gridSize;
+        const { scale, crossTurn, gameState }  = this.state;
+        const { gridSize } = this.props;
         let element = [];
 
         for (let i = 0; i < gridSize * gridSize; i++) {
-            element[i] = {X: Math.floor(i/gridSize), Y: i % gridSize};
+            element[i] = { X : Math.floor(i / gridSize), Y : i % gridSize };
         }
 
         return element.map((element, index) => (
             <Symbol
-            scale = {scale}
-            position = {[element.Y * scale, element.X * scale]}
-            mainClickHandler = {this.handleNullClick}
-            crossTurn = {crossTurn}
-            isCross = {gameState[element.X] [element.Y]}
-            key = {index}
-            playerColors = {playerColors}
-            gridSize = {gridSize}
+                scale = {scale}
+                position = {[element.Y * scale, element.X * scale]}
+                mainClickHandler = {this.handleNullClick}
+                crossTurn = {crossTurn}
+                isCross = {gameState[element.X][element.Y]}
+                key = {index}
+                playerColors = {playerColors}
+                gridSize = {gridSize}
             />
         ));
     }
 
     drawLines() {
-        const gridSize = this.props.gridSize;
-        const scale = this.state.scale;
+        const { scale } = this.state;
+        const { gridSize }  = this.props;
 
         let element = [];
         for (let i = 1; i < gridSize; i++)
         {
             element.push(
                 [0, i * scale, gridSize * scale, i * scale], // horizontal lines
-                [i * scale, 0, i * scale, gridSize * scale] // vertial lines
+                [i * scale, 0, i * scale, gridSize * scale] // vertical lines
             );
         }
 
         return element.map((element, index) => (
-            <line x1={element[0]} y1={element[1]} x2={element[2]} y2={element[3]}
-                strokeWidth={scale / 25} stroke="black" key={index}/>
+            <line
+                x1 = {element[0]} y1 = {element[1]} x2 = {element[2]} y2 = {element[3]}
+                strokeWidth = {scale / 25} stroke = "black" key = {index}/>
             ));
     }
 
     newGame() {
-        const gridSize = this.props.gridSize;
-        const numberOfGamesPlayed = this.state.numberOfGamesPlayed + 1;
-        const numberOfGamesToPlay = this.props.numberOfGames;
+        const { gridSize, numberOfGames : numberOfGamesToPlay, matchOver, startToggle, player1starts } = this.props;
+        const { numberOfGamesPlayed, p1Score, p2Score } = this.state;
+        const updatedNumberOfGamesPlayed = numberOfGamesPlayed + 1;
 
-        if (numberOfGamesPlayed >= numberOfGamesToPlay) {// Time to stop
-            this.props.matchOver(this.state.p1Score, this.state.p2Score);
+        if (updatedNumberOfGamesPlayed >= numberOfGamesToPlay) {// Time to stop
+            matchOver(p1Score, p2Score);
         } else {
             this.setState({
                 playing: true,
                 draw: false,
-                crossTurn: (this.props.startToggle) ? this.whoStarts() : this.props.player1starts,
-                gameState: Array.from({length: gridSize}, row => Array(gridSize).fill(null)),
+                crossTurn: (startToggle) ? this.whoStarts() : player1starts,
+                gameState: Array.from({ length: gridSize }, row => Array(gridSize).fill(null)),
                 winLineParams: [null, null, null, null],
-                numberOfGamesPlayed: numberOfGamesPlayed,
+                numberOfGamesPlayed: updatedNumberOfGamesPlayed,
             });
         }
     }
 
     whoStarts() { // toggle is on
-        return (this.state.numberOfGamesPlayed % 2) ? this.props.player1starts : !this.props.player1starts;
+        const { player1starts } = this.props;
+        return (this.state.numberOfGamesPlayed % 2) ? player1starts : !player1starts;
     }
 
     render () {
-        const playerNames = this.props.playerNames;
-        const gridSize = this.props.gridSize;
-
-        const scale = this.state.scale; // Size of each space
-        const winLineParams = this.state.winLineParams; // For line though winning set
-        const crossTurn = this.state.crossTurn;
+        const { playerNames, gridSize, playerColors } = this.props;
+        const { scale, winLineParams, crossTurn, playing, draw, p1Score,  p2Score } = this.state; 
         const fontSize = Math.max((gridSize * scale) / 30, 10); // Ensures readable text
         let scaledWinLineParams = [];
 
@@ -179,16 +179,16 @@ export default class Game extends React.Component {
             <div>
                 <table style={{fontSize: `${fontSize}px`}} padding="0"><tbody>
                     <tr>
-                        <td width={(gridSize * scale) / 3} align="center">{playerNames[0]} (<span style={{"color":this.props.playerColors[0]}}>x</span>)</td>
+                        <td width={(gridSize * scale) / 3} align="center">{playerNames[0]} (<span style={{"color" : playerColors[0]}}>x</span>)</td>
                         <td width={(gridSize * scale) / 3}></td>
-                        <td width={(gridSize * scale) / 3} align="center">{playerNames[1]} (<span style={{"color":this.props.playerColors[1]}}>o</span>)</td>
+                        <td width={(gridSize * scale) / 3} align="center">{playerNames[1]} (<span style={{"color" : playerColors[1]}}>o</span>)</td>
                     </tr>
                     <tr>
                         <td width={(gridSize * scale) / 3}></td>
-                            {this.state.playing ?
-                                <td width={(gridSize * scale) / 3} align="center">{crossTurn ? // Whoose turn is it?
+                            {playing ?
+                                <td width={(gridSize * scale) / 3} align="center">{crossTurn ? // Whose turn is it?
                                     playerNames[0] : playerNames[1]}'s turn</td>
-                                : (this.state.draw ? // Is it a draw?
+                                : (draw ? // Is it a draw?
                                     <td width={(gridSize * scale) / 3} align="center" style={{fontWeight:"bold"}}>It's a draw</td>
                                     :
                                     <td width={(gridSize * scale) / 3} align="center" style={{fontWeight:"bold"}}>{!crossTurn ? // Who won?
@@ -197,15 +197,15 @@ export default class Game extends React.Component {
 
                     </tr>
                     <tr>
-                        <td width={(gridSize * scale) / 3} align="center">{this.state.p1Score}</td>
+                        <td width={(gridSize * scale) / 3} align="center">{p1Score}</td>
                         <td width={(gridSize * scale) / 3}></td>
-                        <td width={(gridSize * scale) / 3} align="center">{this.state.p2Score}</td>
+                        <td width={(gridSize * scale) / 3} align="center">{p2Score}</td>
                     </tr>
                 </tbody></table><br/>
 
                 <svg width={gridSize * scale} height={gridSize * scale}>
                     {this.drawLines()}
-                    {this.drawSymbols(this.props.playerColors)}
+                    {this.drawSymbols(playerColors)}
                     <line x1={scaledWinLineParams[0]} y1={scaledWinLineParams[1]}
                     x2={scaledWinLineParams[2]} y2={scaledWinLineParams[3]}
                     strokeWidth={scale / 25}
@@ -218,7 +218,7 @@ export default class Game extends React.Component {
                     scale = {scale}
                 ></Slider>
                 <span style={{"paddingLeft":`${(gridSize * scale) / 3}px`}}>
-                    {this.state.playing ?
+                    {playing ?
                         <button style={{fontSize: `${fontSize}px`}} type="reset"
                         onClick={() => {location.reload()}}>Reset Everything</button>
                         :

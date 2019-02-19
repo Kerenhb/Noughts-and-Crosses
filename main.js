@@ -26,41 +26,40 @@ export default class App extends React.Component {
         this.updateGridSize = this.updateGridSize.bind(this);
         this.updateNumberOfGames = this.updateNumberOfGames.bind(this);
         this.toggleOn = this.toggleOn.bind(this);
-        this.onSumbit = this.onSumbit.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.matchOver = this.matchOver.bind(this);
     }
 
     updateName(event, playerNumber){
-        let playerNames = this.state.playerNames;
+        let { playerNames } = this.state;
         playerNames[playerNumber] = event.target.value;
-        this.setState({playerNames});
+        this.setState({ playerNames });
     }
 
     updateColor(event, playerNumber){
-        let playerColors = this.state.playerColors;
+        let { playerColors } = this.state;
         playerColors[playerNumber] = event.target.value;
-        this.setState({playerColors});
+        this.setState({ playerColors });
     }
 
     updateWhoStarts(playerNumber) {
-        this.setState({player1starts: !playerNumber}) // 0 = player 1, 1 = player 2
+        this.setState({ player1starts: !playerNumber }) // 0 = player 1, 1 = player 2
     }
 
     updateGridSize(event) {
-        this.setState({gridSize: event.target.value})
+        this.setState({ gridSize: event.target.value })
     }
 
     updateNumberOfGames(event) {
-        this.setState({numberOfGames: event.target.value})
+        this.setState({ numberOfGames: event.target.value })
     }
 
     toggleOn(state) {
-        this.setState({startToggle: state});
+        this.setState({ startToggle: state });
     }
 
-    onSumbit() {
-        const playerNames = this.state.playerNames;
-        const playerColors = this.state.playerColors;
+    onSubmit() {
+        const { playerNames, playerColors, gridSize, numberOfGames } = this.state;
         let errorString = "";
 
         // Validation
@@ -71,38 +70,38 @@ export default class App extends React.Component {
             errorString += "No player name entered for player 2\n";
         }
         if (playerNames[0].length != 0 && (playerNames[1].length != 0) && playerNames[0] == playerNames[1]){
-            errorString += "Player names cannot be indentical\n";
+            errorString += "Player names cannot be identical\n";
         }
 
         if (playerColors[0] == "#ffffff") {
-            errorString += "Can not choose white as a color for player 2\n";
+            errorString += "Can not choose white as a color for player 1\n";
         }
         if (playerColors[1] == "#ffffff") {
             errorString += "Can not choose white as a color for player 2\n";
         }
         if (playerColors[0] != "#ffffff" && (playerColors[1] != "#ffffff") && playerColors[0] == playerColors[1]){
-            errorString += "Player colors cannot be indentical\n";
+            errorString += "Player colors cannot be identical\n";
         }
 
-        if (this.state.gridSize <= 1) {
+        if (gridSize <= 1) {
             errorString += "Grid size needs to be at least 2\n";
         }
-        if (this.state.gridSize > 20) {
+        if (gridSize > 20) {
             errorString += "Grid size needs to smaller than 20\n";
         }
-        if (!Number.isInteger(Number(this.state.gridSize))) {
-            errorString += "Need to have an interger grid size\n";
+        if (!Number.isInteger(Number(gridSize))) {
+            errorString += "Need to have an integer grid size\n";
         }
 
-        if (this.state.numberOfGames <= 0) {
+        if (numberOfGames <= 0) {
             errorString += "Need to play at least one game\n";
         }
-        if (!Number.isInteger(Number(this.state.numberOfGames))) {
-            errorString += "Need to have an interger number of games\n";
+        if (!Number.isInteger(Number(numberOfGames))) {
+            errorString += "Need to have an integer number of games\n";
         }
 
         if (errorString.length == 0) {
-            this.setState({showForm: false}); // switch to game
+            this.setState({ showForm: false }); // switch to game
         } else {
             alert(errorString);
         }
@@ -111,15 +110,13 @@ export default class App extends React.Component {
     matchOver(p1Score, p2Score) {
         this.setState({
             matchOver: true,
-            p1Score: p1Score,
-            p2Score: p2Score,
+            p1Score,
+            p2Score,
         });
     }
 
     drawEndScreen() {
-        const playerNames = this.state.playerNames;
-        const p1Score = this.state.p1Score;
-        const p2Score = this.state.p2Score;
+        const { playerNames, p1Score, p2Score } = this.state;
 
         return (
             <div>
@@ -158,30 +155,31 @@ export default class App extends React.Component {
     }
 
     render() {
-        return (!this.state.matchOver ?
-                    this.state.showForm ?
+        const { matchOver, showForm, playerNames, playerColors, player1starts, gridSize, numberOfGames, startToggle } = this.state;
+        return (!matchOver ?
+                    showForm ?
                         <Form
-                            playerNames = {this.state.playerNames}
+                            playerNames = {playerNames}
                             updateName = {this.updateName}
-                            playerColors = {this.state.playerColors}
+                            playerColors = {playerColors}
                             updateColor = {this.updateColor}
-                            player1starts = {this.state.player1starts}
+                            player1starts = {player1starts}
                             updateWhoStarts = {this.updateWhoStarts}
                             updateGridSize = {this.updateGridSize}
-                            gridSize = {this.state.gridSize}
+                            gridSize = {gridSize}
                             updateNumberOfGames = {this.updateNumberOfGames}
-                            numberOfGames = {this.state.numberOfGames}
-                            startToggle = {this.state.startToggle}
+                            numberOfGames = {numberOfGames}
+                            startToggle = {startToggle}
                             toggleOn = {this.toggleOn}
-                            onSumbit = {this.onSumbit}
+                            onSubmit = {this.onSubmit}
                         />
                         : <Game
-                            playerNames = {this.state.playerNames}
-                            player1starts = {this.state.player1starts}
-                            playerColors = {this.state.playerColors}
-                            gridSize = {Number(this.state.gridSize)}
-                            numberOfGames = {Number(this.state.numberOfGames)}
-                            startToggle = {this.state.startToggle}
+                            playerNames = {playerNames}
+                            player1starts = {player1starts}
+                            playerColors = {playerColors}
+                            gridSize = {Number(gridSize)}
+                            numberOfGames = {Number(numberOfGames)}
+                            startToggle = {startToggle}
                             matchOver = {this.matchOver}
                         />
                     : this.drawEndScreen()
