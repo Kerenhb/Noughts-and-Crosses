@@ -21,7 +21,7 @@ Once the project has been built, it is placed inside a build directory. In order
 How to set up and play the game once it's been loaded up.
 
 ### Setting up the game
-When the app first loads up your greeted with a set-up form. The form is pre-filled with default parameters, so feel free at least initially to ignore the form. Simply clicking the `submit` button and playing with the default settings. 
+When the app first loads up your greeted with a set-up form. The form is pre-filled with default parameters, so feel free at least initially to ignore the form. Simply clicking the `submit` button and play with the default settings. 
 
 The form allows you to change each players name and colour, as well as some more advanced settings. The standard game of noughts and crosses uses a 3x3 grid, but by changing the grid size option you can play on a square grid of any integer size from 2x2 up-to and including 20x20. The rules are the same on a larger grid, you just need to complete a (horizontal/vertical/diagonal) line of your symbols before the other player does. Lastly you can choose how many games to play, who goes first and if the first player should switch each new game.
 
